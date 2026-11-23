@@ -244,7 +244,7 @@ var PERIODS=[
 var METRICS=[{v:"mention",l:"提到",col:1},{v:"accuracy",l:"准确度",col:2},{v:"ours",l:"第一方引用",col:3},{v:"confusion",l:"混淆",col:4}];
 var S={base:"mention",pm:"mention",view:"prompt",period:PERIODS.length-1,platform:"all",intent:"all",trend:"mention"};
 function $(id){return document.getElementById(id)}
-function esc(s){return String(s).replace(/[&<>"]/g,function(c){return{"&":"&","<":"<",">":">",'"':"""}[c]})}
+function esc(s){return String(s).replace(/[&<>"]/g,function(c){return{"&":"\x26amp;","<":"\x26lt;",">":"\x26gt;",'"':"\x26quot;"}[c]})}
 function parse(raw,note){
  if(!raw||raw==="NA")return{m:"NA",a:null,o:"NA",c:"NA",note:note||(raw?"":"未测")};
  var p=raw.split("/");return{m:p[0],a:p[1]==="-"?null:Number(p[1]),o:p[2],c:p[3],note:p[4]||""};
