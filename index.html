@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html lang="zh-Hans">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<meta name="googlebot" content="noindex,nofollow">
+<title>AI4GOOD GEO 调查报告</title>
+<style>
+:root{--bg:#f5f6f8;--card:#fff;--text:#1c2230;--muted:#5d6676;--line:#e3e6eb;--accent:#2f6fed;--accent-soft:#e9f0ff;--bar:#c6d4f2}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--text);font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Hiragino Sans GB","Microsoft YaHei","Noto Sans CJK SC","Segoe UI",Roboto,sans-serif;line-height:1.7;font-size:15px}
+.wrap{max-width:1100px;margin:0 auto;padding:32px 20px 48px}
+h1{font-size:28px;margin:0 0 8px;line-height:1.3}
+.summary{color:var(--muted);font-size:16px;margin:0 0 18px}
+nav.toc{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 24px}
+nav.toc a{font-size:13px;color:var(--accent);background:var(--card);border:1px solid var(--line);border-radius:999px;padding:4px 12px;text-decoration:none}
+nav.toc a:hover{background:var(--accent-soft)}
+section{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:22px 22px 18px;margin-bottom:20px;scroll-margin-top:12px}
+.sec-head{display:flex;flex-wrap:wrap;gap:12px;align-items:center;justify-content:space-between;margin-bottom:14px}
+h2{font-size:19px;margin:0}
+h3{font-size:15px;margin:22px 0 8px;color:var(--muted)}
+.controls{display:flex;flex-wrap:wrap;gap:10px;align-items:center}
+.seg{display:inline-flex;background:#eef0f3;border-radius:10px;padding:3px;flex-wrap:wrap}
+.seg button{border:0;background:transparent;padding:6px 13px;border-radius:8px;font:inherit;font-size:14px;color:var(--muted);cursor:pointer}
+.seg button.on{background:#fff;color:var(--text);box-shadow:0 1px 3px rgba(0,0,0,.12);font-weight:600}
+label.sel{font-size:13px;color:var(--muted);display:inline-flex;align-items:center;gap:6px}
+select{font:inherit;font-size:14px;padding:6px 8px;border:1px solid var(--line);border-radius:8px;background:#fff;color:var(--text)}
+.tbl{width:100%;overflow-x:auto;-webkit-overflow-scrolling:touch}
+table{width:100%;border-collapse:collapse;font-size:14px}
+th,td{padding:9px 10px;border-bottom:1px solid var(--line);text-align:left;vertical-align:top}
+th{color:var(--muted);font-weight:600;font-size:13px;white-space:nowrap}
+td.num,th.num{text-align:right;white-space:nowrap}
+td.c,th.c{text-align:center;white-space:nowrap}
+.hl{background:var(--accent-soft)}
+.bars{margin:18px 0 6px}
+.bar-row{display:grid;grid-template-columns:110px 1fr 64px;gap:10px;align-items:center;margin:7px 0;font-size:14px}
+.bar-track{background:#f0f2f5;border-radius:6px;height:20px;overflow:hidden}
+.bar-fill{height:100%;background:var(--bar);border-radius:6px;transition:width .35s}
+.bar-row.top .bar-fill{background:var(--accent)}
+.bar-val{text-align:right;font-variant-numeric:tabular-nums}
+.caption{color:var(--muted);font-size:13px;margin:10px 0 0}
+.callout{background:var(--accent-soft);border-left:4px solid var(--accent);border-radius:8px;padding:12px 14px;margin-bottom:14px}
+.callout b{color:var(--accent);margin-right:8px}
+ol,ul{margin:0;padding-left:22px}
+li{margin:6px 0}
+p{margin:10px 0}
+/* heatmap */
+.hm-wrap{overflow-x:auto;-webkit-overflow-scrolling:touch;margin:6px 0 4px}
+.hm{display:grid;gap:4px;min-width:min-content}
+.hm .h{font-size:12px;color:var(--muted);font-weight:600;text-align:center;padding:4px 2px;white-space:nowrap;align-self:end}
+.hm .r{font-size:13px;font-weight:600;white-space:nowrap;padding:0 8px 0 0;display:flex;align-items:center;font-variant-numeric:tabular-nums}
+.hm .r small{color:var(--muted);font-weight:400;margin-left:6px}
+.hm .cell{height:38px;border-radius:7px;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:600;min-width:78px;font-variant-numeric:tabular-nums;cursor:default}
+.hm .cell.na{background:repeating-linear-gradient(45deg,#f3f4f6,#f3f4f6 5px,#e7e9ed 5px,#e7e9ed 10px);color:#8a92a0;font-weight:500;font-size:12px}
+.legend{display:flex;flex-wrap:wrap;gap:14px;align-items:center;font-size:12px;color:var(--muted);margin:10px 0 4px}
+.legend .sw{display:inline-block;width:18px;height:14px;border-radius:4px;vertical-align:middle;margin-right:5px}
+.legend .grad{display:inline-block;width:120px;height:12px;border-radius:4px;vertical-align:middle;margin:0 6px}
+.chk{list-style:none;padding:0}
+.chk li{padding-left:28px;position:relative}
+.chk li:before{content:"";position:absolute;left:2px;top:5px;width:15px;height:15px;border:1.5px solid #9aa3b2;border-radius:4px}
+svg text{font-family:inherit}
+.totop{position:fixed;right:16px;bottom:16px;background:var(--card);border:1px solid var(--line);border-radius:999px;padding:8px 14px;font-size:13px;color:var(--accent);text-decoration:none;box-shadow:0 2px 8px rgba(0,0,0,.08)}
+footer{text-align:center;color:var(--muted);font-size:13px;margin-top:28px}
+@media (max-width:600px){.wrap{padding:20px 12px 60px}h1{font-size:22px}section{padding:16px 13px}.bar-row{grid-template-columns:84px 1fr 52px;font-size:13px}.hm .cell{min-width:58px;height:34px;font-size:12px}}
+</style>
+</head>
+<body>
+<div class="wrap" id="top">
+<h1>AI4GOOD GEO 调查报告</h1>
+<p class="summary">2026-11-22 未登录基线：六个平台、核心 20 条 prompt。数字均出自当日日志，对照 site-check.md。</p>
+<nav class="toc">
+<a href="#summary">结论摘要</a><a href="#baseline">各平台基线</a><a href="#method">测试方法</a><a href="#prompts">按意图与 prompt 的表现</a><a href="#errors">反复出现的错误事实</a><a href="#sources">引用来源分析</a><a href="#recs">优化建议</a><a href="#gaps">已知缺口</a><a href="#weekly">每周变化记录</a>
+</nav>
+
+<section id="summary">
+<div class="sec-head"><h2>结论摘要</h2></div>
+<div class="callout"><b>v1 基线</b>ChatGPT 领先（15/20 提到，准确度 2.06）。三条不带品牌名的品类问题全部落空。英文品牌与同名辨析是主要缺口。模型仍在引用 503 中的 .cn 缓存。</div>
+<ol>
+<li>ChatGPT 明显领先：20 条中 15 条提到我们，平均准确度 2.06（满分 3，17 条计分），10/20 引用了 ai-4good.ai。</li>
+<li>三条不带品牌名的品类问题（C-*）在六个已测平台上都没有推荐我们。</li>
+<li>英文品牌问题和「是否与联合国 AI for Good 为同一家」（D-ZH-01）是最大缺口。D-ZH-01 在五个平台上失败，只有通义千问把上海这家公司说成独立主体。</li>
+<li>反复出现的错误事实包括：把 LV 写成客户；过期的 .cn 内容（爱老师、爱公益、徐汇地址、inquiry@ai-4good.ai）；未经官网证实的「2024 年成立」；千问编造的伦敦办公室；把 keating.help 的 €39 / €49 / €99 标价安到 KEATING.AI 头上；把 keating.ai（Brian Keating）当成 KEATING.AI。</li>
+<li>中文检索更多引用的是仍为 503 的 .cn 缓存和 chatgpt.site 洞察页，而不是当前 ai-4good.ai。日志里 ai4good.org（同名基金会）的来源条目（34）多于 ai-4good.ai（17）。通义千问一次都没有引用我方域名。</li>
+</ol>
+</section>
+
+<section id="baseline">
+<div class="sec-head"><h2>各平台基线</h2><div class="controls"><div class="seg" id="segBase"></div></div></div>
+<div class="tbl"><table id="statsTbl"></table></div>
+<div class="bars" id="bars"></div>
+<p>Google AI 概览另有 11 / 20 次搜索在第一页出现我方或很可能属于我们的结果（6 次为可确认的官网主机，5 次为网址未读到的 LinkedIn 公司页或「2 mins on Keating AI」帖）。</p>
+<p class="caption">千问分母是 14：4 条需登录、2 条未测不计入；4 条拒答计为未提到。Google 分母是 19，C-ZH-01 无法生成概览。准确度满分 3，品类题未提到时不计入平均分。</p>
+</section>
+
+<section id="method">
+<div class="sec-head"><h2>测试方法</h2></div>
+<ul>
+<li>六个已测平台：ChatGPT、Perplexity、Gemini、Google AI 概览（仅 AI Overview，不用 AI Mode）、通义千问（Qwen-快速，tongyi.com 跳转 qianwen.com）、文心一言（百度文心助手，默认对话，自动全球搜）。</li>
+<li>核心 20 条 prompt，覆盖 10 个意图：B 品牌与公司身份、F 创始人与职务、P 产品理解（KEATING.AI）、S 服务、D 同名辨析、C 非品牌类目发现、X 对比与替代、T 信任与证据、A 行动与购买、L 地域与市场。</li>
+<li>方法：未登录、无痕窗口，每条问题新开对话或新搜索，记录 PST 时间戳和当日可见来源。测试日期 2026-11-22（PST）。</li>
+<li>需登录、未测：Copilot、Grok、豆包、Kimi、DeepSeek、腾讯元宝。platforms.md 将约 2026-11-20 的非正式测试记为已撞登录墙；本基线未再登录尝试。</li>
+</ul>
+</section>
+
+<section id="prompts">
+<div class="sec-head"><h2>按意图与 prompt 的表现</h2></div>
+<div class="controls" style="margin-bottom:12px">
+<div class="seg" id="segPrompt"></div>
+<div class="seg" id="segView"></div>
+<label class="sel">期次 <select id="selPeriod"></select></label>
+<label class="sel">平台 <select id="selPlatform"></select></label>
+<label class="sel">意图 <select id="selIntent"></select></label>
+</div>
+<div class="hm-wrap"><div class="hm" id="heatmap"></div></div>
+<div class="legend" id="legend"></div>
+<p class="caption">表格为准。斜纹格为未计分（需登录、未测、无概览，或品类题未提到时的准确度）。Gemini 的 D-ZH-01 为测试摘要推断，不是逐字记录。「按意图汇总」为该意图下各 prompt 的平均值，不含未计分格。</p>
+<h3>明细表</h3>
+<div class="tbl"><table id="promptTbl"></table></div>
+<p>三条 C 组类目题六个平台均为未提到（Google 的 C-ZH-01 为无概览）。S-ZH-02 六个平台都提到了我们。P-ZH-03（三个模块）只有 ChatGPT 认成我们的产品。D-ZH-01 只有千问答对。</p>
+</section>
+
+<section id="errors">
+<div class="sec-head"><h2>反复出现的错误事实</h2></div>
+<p>对照 22 日官网：Chanel、Fendi 等以 logo alt 出现在「客户伙伴」中；路易威登 / LV 不在当日直播页。成立年份、街道地址、inquiry@ai-4good.ai、爱老师 / 爱课堂 / 爱伴老均不在当日官网。www.ai-4good.cn 当日 21:11 PST 仍为 HTTP 503。</p>
+<ul>
+<li>把 LV 写成客户：ChatGPT T-ZH-01 称来自官网客户伙伴 logo；Perplexity T-ZH-01、T-EN-01 也列入路易威登。Google T-ZH-01 的概览正文未点名，但自然搜索结果里的 chatgpt.site 摘要出现过 LV。可能来自该洞察页或其他非官网来源。</li>
+<li>过期的 .cn 内容：爱老师出现在 Perplexity（B-ZH-01、S-ZH-02）、Gemini（B-ZH-01）、Google 概览（B-ZH-01、S-ZH-02、A-ZH-01）。爱公益出现在 Perplexity 与 Google 的 B-ZH-01。徐汇区龙文路旧地址出现在 Gemini B-ZH-01、Google A-ZH-01；文心 B-ZH-01 则把登记地址写成徐汇区桂平路 391 号。inquiry@ai-4good.ai 出现在 Google A-ZH-01、千问 T-ZH-01、文心 A-ZH-01。</li>
+<li>「2024 年成立」：Perplexity F-ZH-01，Google F-ZH-01 与 L-EN-01，千问 B-ZH-01（2024 年 5 月）、F-EN-01、S-ZH-02、D-ZH-01，文心 B-ZH-01（2024 年 5 月）。官网上没有成立年份。</li>
+<li>伦敦办公室：仅通义千问 T-ZH-01 编造；官网地理是上海、新加坡、北美。</li>
+<li>keating.help 标价：Perplexity A-EN-02 把 €39 / €49 / €99 当成 KEATING.AI 的套餐，来源是无关产品 keating.help（经 softwarefinder）。文心 A-EN-02 明确没有把该标价安到我们头上。</li>
+<li>把 keating.ai 当成 KEATING.AI：Perplexity、Gemini、Google 概览在英文产品 / 辨析 / 案例题中，常把主定义写成加州大学圣地亚哥分校 Brian Keating 的个人站，或声称域名不区分大小写故为同一站点。</li>
+<li>同名机构混淆：英文 AI4GOOD 常被答成伯克利 AI for Good Foundation（ai4good.org，James Hodson）、ITU AI for Good，或加拿大 AI4Good Lab。六个平台里，千问在已回答内容中混淆次数为 0；Gemini 最高（11 次）。</li>
+</ul>
+</section>
+
+<section id="sources">
+<div class="sec-head"><h2>引用来源分析</h2></div>
+<div class="tbl"><table>
+<thead><tr><th>域名</th><th>来源条目数</th><th>说明</th></tr></thead>
+<tbody>
+<tr><td>ai4good.org</td><td>34</td><td>同名基金会，不是我们</td></tr>
+<tr><td>ai-4good.cn</td><td>27</td><td>全部记为我方；站点当日 503，内容为旧缓存</td></tr>
+<tr><td>ai-4good.ai</td><td>17</td><td>我方现行官网；主要来自 ChatGPT（15 条），Perplexity 与 Google 概览各 1 条</td></tr>
+<tr><td>linkedin.com</td><td>13（其中 9 条记为我方）</td><td>Perplexity 有可确认的 /in/jkshen、/company/ai-4good；Google 概览多次为网址未核实的公司页或「2 mins on Keating AI」帖</td></tr>
+<tr><td>ai4goodlab.com</td><td>9</td><td>加拿大同名实验室</td></tr>
+<tr><td>aiforgood.itu.int / itu.int</td><td>8 + 7</td><td>联合国 ITU 平台</td></tr>
+<tr><td>keating.ai</td><td>8</td><td>Brian Keating 个人站</td></tr>
+<tr><td>keating.help</td><td>7</td><td>无关开源 / 教学项目</td></tr>
+<tr><td>ai4good-insights.jackieshen75.chatgpt.site</td><td>7</td><td>JK 撰写的 GEO 洞察页；Gemini、Google 概览、Perplexity 有引用，摘要有时仍写 LV</td></tr>
+<tr><td>keating.ai-4good.cn</td><td>1</td><td>我方 .cn 产品子域，出现在 Google 概览</td></tr>
+</tbody></table></div>
+<p>按平台看我方引用：ChatGPT 全部为 ai-4good.ai；Perplexity 以 .cn 缓存为主，兼有 LinkedIn、洞察页和 1 条 .ai；Gemini 为 .cn 与洞察页；Google 概览为 .cn、未核实 LinkedIn、洞察页、.ai 与 keating.ai-4good.cn；文心 5 条全部为 .cn 缓存；千问 0 条。</p>
+<p class="caption">统计范围为六份 results.jsonl 中的来源条目（按域名归并，去掉 www）。共 345 条没有可读域名，主要来自千问、文心，以及部分 ChatGPT / Gemini 芯片。</p>
+</section>
+
+<section id="recs">
+<div class="sec-head"><h2>优化建议</h2></div>
+<ol>
+<li>开放 www.ai-4good.cn（21:11 PST 仍为 503、noindex）。中文检索正在引用旧缓存，这是最快能改写模型答案的源头之一。</li>
+<li>上线 llms.txt（当日官网为 404）。草稿在 /workspace/geo-fixes/llms.txt。</li>
+<li>在首页加入组织 / 产品 JSON-LD。当日页面无 JSON-LD；草稿在 /workspace/geo-fixes/schema-homepage.html。</li>
+<li>为不带品牌名的品类问题准备可被引用的公开内容（奢侈品 / 高端零售陪练、国内 GEO 服务、高端零售对话工具），否则 C 组很难被推荐。</li>
+<li>加强英文品牌与同名辨析：明确本企业不是 ITU AI for Good、不是 ai4good.org 基金会，KEATING.AI 不是 keating.ai 或 keating.help。</li>
+<li>在源头修正错误事实：洞察页与对外材料不要把 LV 写成官方客户；更新或下线旧 .cn 文案（爱老师、爱公益、徐汇地址、inquiry@）；不要把「2024 年成立」写成现行官网信息。</li>
+</ol>
+</section>
+
+<section id="gaps">
+<div class="sec-head"><h2>已知缺口</h2></div>
+<ul class="chk">
+<li>Gemini 的 D-ZH-01 依据测试摘要推断，不是逐字记录。</li>
+<li>通义千问有 6 条没有完整答案：D-EN-02、X-EN-01、T-EN-01、A-ZH-01 需登录；A-EN-02、L-EN-01 因此未测。另有 4 条拒答已计入分母。</li>
+<li>Gemini 场次一大部分截图未保留，目前只留下 T-EN-01、A-EN-02、L-EN-01。</li>
+<li>文心 F-EN-01 先用错过题，以 21:05:45 PST 的正确 prompt 重测为准。</li>
+</ul>
+<p class="caption">截至 2026-11-22 的记录状态。</p>
+</section>
+
+<section id="weekly">
+<div class="sec-head"><h2>每周变化记录</h2><div class="controls"><div class="seg" id="segTrend"></div></div></div>
+<div id="trendChart"></div>
+<div class="tbl"><table id="trendTbl"></table></div>
+<p>2026-11-22 v1 基线：六个平台未登录核心 20 条已测完，本报告为对照起点。</p>
+<p class="caption">目前只有 2026-11-22 一个时点，图上每个平台只有一个点。每周复测会追加新的期次。</p>
+</section>
+
+<footer>数据截至 2026-11-22 基线，每周更新</footer>
+</div>
+<a class="totop" href="#top">↑ 回到顶部</a>
+
+<script>
+/* ============================================================
+   数据区：每周复测时，在 PERIODS 末尾追加一个新对象即可。
+   - stats: 各平台汇总（与「各平台基线」表一致）
+   - prompts: 每条 prompt 在各平台的结果，单元格格式
+     "提到/准确度/引用我方/混淆[/备注]"，"-" 为未计分，"NA" 为无答案
+   - naNotes: NA 单元格的原因
+   新平台（如登录态的豆包、Kimi）在 PLATFORMS 里追加即可，旧期次缺失的平台会显示为未计分。
+   ============================================================ */
+var PLATFORMS=[
+ {key:"chatgpt",label:"ChatGPT"},{key:"perplexity",label:"Perplexity"},{key:"gemini",label:"Gemini"},
+ {key:"google",label:"Google 概览"},{key:"qwen",label:"通义千问"},{key:"wenxin",label:"文心一言"}
+];
+var INTENTS={B:"B 品牌与公司身份",F:"F 创始人与职务",P:"P 产品理解",S:"S 服务",D:"D 同名辨析",C:"C 非品牌类目",X:"X 对比与替代",T:"T 信任与证据",A:"A 行动与购买",L:"L 地域与市场"};
+var PERIODS=[
+ {date:"2026-11-22",label:"2026-11-22 v1 基线",note:"v1 基线",
+  stats:{
+   chatgpt:{mention:"15 / 20（75%）",mentionPct:75,accuracy:2.06,accuracyN:17,ours:"10 / 20（50%）",oursPct:50,confusion:3,mentionShort:"75%（15/20）"},
+   perplexity:{mention:"8 / 20（40%）",mentionPct:40,accuracy:0.82,accuracyN:17,ours:"8 / 20（40%）",oursPct:40,confusion:6,mentionShort:"40%（8/20）"},
+   gemini:{mention:"4 / 20（20%）",mentionPct:20,accuracy:0.41,accuracyN:17,ours:"3 / 20（15%）",oursPct:15,confusion:11,mentionShort:"20%（4/20）"},
+   google:{mention:"10 / 19（53%）",mentionPct:53,accuracy:1.0,accuracyN:17,ours:"10 / 19（53%）",oursPct:53,confusion:8,mentionShort:"53%（10/19）"},
+   qwen:{mention:"5 / 14（36%）",mentionPct:36,accuracy:0.73,accuracyN:11,ours:"0 / 14（0%）",oursPct:0,confusion:0,mentionShort:"36%（5/14）"},
+   wenxin:{mention:"8 / 20（40%）",mentionPct:40,accuracy:0.65,accuracyN:17,ours:"5 / 20（25%）",oursPct:25,confusion:6,mentionShort:"40%（8/20）"}
+  },
+  prompts:[
+   ["B-ZH-01","B",{chatgpt:"Y/2/Y/N",perplexity:"Y/1/Y/N",gemini:"Y/1/Y/Y",google:"Y/1/Y/Y",qwen:"Y/2/N/N",wenxin:"Y/1/N/N"}],
+   ["B-EN-01","B",{chatgpt:"N/0/N/Y",perplexity:"Y/2/Y/N",gemini:"N/0/N/Y",google:"N/0/N/Y",qwen:"N/0/N/N/拒答",wenxin:"Y/1/Y/Y"}],
+   ["F-ZH-01","F",{chatgpt:"Y/3/Y/N",perplexity:"Y/2/Y/N",gemini:"N/0/N/Y",google:"Y/2/Y/N",qwen:"N/0/N/N/拒答",wenxin:"Y/1/N/N"}],
+   ["F-EN-01","F",{chatgpt:"Y/3/N/N",perplexity:"N/0/N/Y",gemini:"N/0/N/Y",google:"Y/3/Y/N",qwen:"Y/2/N/N",wenxin:"Y/1/N/N"}],
+   ["P-ZH-01","P",{chatgpt:"Y/2/Y/N",perplexity:"Y/2/Y/N",gemini:"N/0/N/Y",google:"Y/2/Y/N",qwen:"N/0/N/N/拒答",wenxin:"N/0/Y/N"}],
+   ["P-ZH-03","P",{chatgpt:"Y/3/N/N",perplexity:"N/0/N/N",gemini:"N/0/N/N",google:"N/0/N/N",qwen:"N/0/N/N",wenxin:"N/0/N/N"}],
+   ["P-EN-01","P",{chatgpt:"Y/2/N/N",perplexity:"N/0/N/Y",gemini:"N/0/N/Y",google:"Y/1/Y/Y",qwen:"N/0/N/N/拒答",wenxin:"Y/2/N/N"}],
+   ["S-ZH-02","S",{chatgpt:"Y/2/Y/N",perplexity:"Y/1/Y/N",gemini:"Y/2/Y/N",google:"Y/1/Y/N",qwen:"Y/1/N/N",wenxin:"Y/2/Y/N"}],
+   ["S-EN-01","S",{chatgpt:"Y/3/Y/N",perplexity:"N/0/N/N",gemini:"Y/2/Y/N",google:"N/0/N/Y",qwen:"N/0/N/N",wenxin:"N/0/N/Y"}],
+   ["D-ZH-01","D",{chatgpt:"N/0/N/Y",perplexity:"N/0/N/Y",gemini:"N/0/N/Y",google:"N/0/N/Y",qwen:"Y/2/N/N",wenxin:"N/0/N/Y"}],
+   ["D-EN-02","D",{chatgpt:"Y/1/Y/Y",perplexity:"N/0/N/Y",gemini:"N/0/N/Y",google:"N/0/Y/Y",qwen:"NA",wenxin:"N/0/N/N"}],
+   ["C-ZH-01","C",{chatgpt:"N/-/N/N",perplexity:"N/-/N/N",gemini:"N/-/N/N",google:"NA",qwen:"N/-/N/N",wenxin:"N/-/N/N"}],
+   ["C-ZH-03","C",{chatgpt:"N/-/N/N",perplexity:"N/-/N/N",gemini:"N/-/N/N",google:"N/-/N/N",qwen:"N/-/N/N",wenxin:"N/-/N/N"}],
+   ["C-EN-01","C",{chatgpt:"N/-/N/N",perplexity:"N/-/N/N",gemini:"N/-/N/N",google:"N/-/N/N",qwen:"N/-/N/N",wenxin:"N/-/N/N"}],
+   ["X-EN-01","X",{chatgpt:"Y/2/Y/N",perplexity:"N/0/N/N",gemini:"N/0/N/N",google:"Y/2/N/N",qwen:"NA",wenxin:"N/0/N/Y"}],
+   ["T-ZH-01","T",{chatgpt:"Y/2/N/N",perplexity:"Y/2/Y/N",gemini:"Y/2/N/N",google:"Y/2/Y/N",qwen:"Y/1/N/N",wenxin:"N/0/N/Y"}],
+   ["T-EN-01","T",{chatgpt:"Y/2/N/N",perplexity:"Y/2/Y/N",gemini:"N/0/N/N",google:"N/0/N/Y",qwen:"NA",wenxin:"N/0/N/Y"}],
+   ["A-ZH-01","A",{chatgpt:"Y/2/Y/N",perplexity:"Y/2/Y/N",gemini:"N/0/N/Y",google:"Y/1/Y/N",qwen:"NA",wenxin:"Y/1/Y/N"}],
+   ["A-EN-02","A",{chatgpt:"Y/3/Y/N",perplexity:"N/0/N/Y",gemini:"N/0/N/Y",google:"N/0/N/Y",qwen:"NA",wenxin:"N/0/N/N"}],
+   ["L-EN-01","L",{chatgpt:"Y/3/Y/N",perplexity:"N/0/N/Y",gemini:"N/0/N/Y",google:"Y/2/Y/N",qwen:"NA",wenxin:"Y/2/Y/N"}]
+  ],
+  naNotes:{"qwen|D-EN-02":"需登录","qwen|X-EN-01":"需登录","qwen|T-EN-01":"需登录","qwen|A-ZH-01":"需登录","qwen|A-EN-02":"未测","qwen|L-EN-01":"未测","google|C-ZH-01":"无概览"}
+ }
+];
+
+/* ============================ 逻辑区 ============================ */
+var METRICS=[{v:"mention",l:"提到",col:1},{v:"accuracy",l:"准确度",col:2},{v:"ours",l:"第一方引用",col:3},{v:"confusion",l:"混淆",col:4}];
+var S={base:"mention",pm:"mention",view:"prompt",period:PERIODS.length-1,platform:"all",intent:"all",trend:"mention"};
+function $(id){return document.getElementById(id)}
+function esc(s){return String(s).replace(/[&<>"]/g,function(c){return{"&":"&","<":"<",">":">",'"':"""}[c]})}
+function parse(raw,note){
+ if(!raw||raw==="NA")return{m:"NA",a:null,o:"NA",c:"NA",note:note||(raw?"":"未测")};
+ var p=raw.split("/");return{m:p[0],a:p[1]==="-"?null:Number(p[1]),o:p[2],c:p[3],note:p[4]||""};
+}
+function cellVal(c,m){
+ if(m==="mention")return c.m==="NA"?NaN:(c.m==="Y"?1:0);
+ if(m==="accuracy")return c.a==null?NaN:c.a;
+ if(m==="ours")return c.o==="NA"?NaN:(c.o==="Y"?1:0);
+ return c.c==="NA"?NaN:(c.c==="Y"?1:0);
+}
+function cellLabel(c,m){
+ var b=m==="mention"?(c.m==="NA"?"—":c.m):m==="accuracy"?(c.a==null?"—":String(c.a)):m==="ours"?(c.o==="NA"?"—":c.o):(c.c==="NA"?"—":c.c);
+ return c.note&&(c.m==="NA"||c.note==="拒答")?b+"（"+c.note+"）":b;
+}
+function seg(id,opts,key,cb){
+ var el=$(id);el.innerHTML=opts.map(function(o){return '<button type="button" data-v="'+o.v+'" class="'+(S[key]===o.v?"on":"")+'">'+o.l+"</button>"}).join("");
+ el.onclick=function(e){var b=e.target.closest("button");if(!b)return;S[key]=b.getAttribute("data-v");cb()};
+}
+function statVal(st,m){return m==="mention"?st.mentionPct:m==="accuracy"?st.accuracy:m==="ours"?st.oursPct:st.confusion}
+function disp(m,v){return m==="accuracy"?v.toFixed(2):m==="confusion"?String(v):v+"%"}
+
+/* --- 各平台基线 --- */
+function renderBase(){
+ seg("segBase",METRICS,"base",renderBase);
+ var P=PERIODS[PERIODS.length-1],col=METRICS.filter(function(x){return x.v===S.base})[0].col;
+ var heads=["平台","提到我们","平均准确度（/3）","引用我方页面","与同名机构混淆"];
+ var h="<thead><tr>"+heads.map(function(t,i){return '<th class="'+(i?"num":"")+(i===col?" hl":"")+'">'+t+"</th>"}).join("")+"</tr></thead><tbody>";
+ var items=[];
+ PLATFORMS.forEach(function(pl){var st=P.stats[pl.key];if(!st)return;
+  var c=[pl.label,st.mention,st.accuracy.toFixed(2)+"（"+st.accuracyN+" 条计分）",st.ours,String(st.confusion)];
+  h+="<tr>"+c.map(function(t,i){return '<td class="'+(i?"num":"")+(i===col?" hl":"")+'">'+esc(t)+"</td>"}).join("")+"</tr>";
+  items.push({l:pl.label,v:statVal(st,S.base)});
+ });
+ $("statsTbl").innerHTML=h+"</tbody>";
+ items.sort(function(a,b){return b.v-a.v});
+ var max=Math.max.apply(null,items.map(function(i){return i.v}))||1;
+ $("bars").innerHTML=items.map(function(it,i){return '<div class="bar-row'+(i===0?" top":"")+'"><span>'+esc(it.l)+'</span><div class="bar-track"><div class="bar-fill" style="width:'+(it.v/max*100)+'%"></div></div><span class="bar-val">'+disp(S.base,it.v)+"</span></div>"}).join("");
+}
+
+/* --- 热力图 --- */
+var PAL={
+ mention:["#eef1f5","#1f9d6b"],ours:["#eef1f5","#2f6fed"],accuracy:["#eef1f5","#1f9d6b"],confusion:["#eef1f5","#d64545"]
+};
+function hex(h){return[parseInt(h.substr(1,2),16),parseInt(h.substr(3,2),16),parseInt(h.substr(5,2),16)]}
+function mix(a,b,t){var A=hex(a),B=hex(b);return"rgb("+A.map(function(x,i){return Math.round(x+(B[i]-x)*t)}).join(",")+")"}
+function color(m,v,max){var t=Math.max(0,Math.min(1,v/max));return{bg:mix(PAL[m][0],PAL[m][1],t),fg:t>0.55?"#fff":"#1c2230"}}
+function fmtHm(m,v,agg){
+ if(m==="accuracy")return agg?v.toFixed(2):String(v);
+ if(agg)return Math.round(v*100)+"%";
+ return v===1?"Y":"N";
+}
+function renderPrompts(){
+ seg("segPrompt",METRICS,"pm",renderPrompts);
+ seg("segView",[{v:"prompt",l:"按 prompt"},{v:"intent",l:"按意图汇总"}],"view",renderPrompts);
+ var P=PERIODS[S.period],m=S.pm,max=m==="accuracy"?3:1;
+ var plats=PLATFORMS.filter(function(p){return S.platform==="all"||p.key===S.platform});
+ var rows=P.prompts.filter(function(r){return S.intent==="all"||r[1]===S.intent}).map(function(r){
+  var cells={};PLATFORMS.forEach(function(p){cells[p.key]=parse(r[2][p.key],(P.naNotes||{})[p.key+"|"+r[0]])});
+  return{id:r[0],intent:r[1],cells:cells};
+ });
+ var hmRows;
+ if(S.view==="intent"){
+  var order=[];rows.forEach(function(r){if(order.indexOf(r.intent)<0)order.push(r.intent)});
+  hmRows=order.map(function(k){var rs=rows.filter(function(r){return r.intent===k});
+   return{label:INTENTS[k]||k,sub:rs.length+" 条",vals:plats.map(function(p){
+    var vs=rs.map(function(r){return cellVal(r.cells[p.key],m)}).filter(function(v){return!isNaN(v)});
+    return{v:vs.length?vs.reduce(function(a,b){return a+b},0)/vs.length:NaN,t:vs.length?"":"未计分",agg:true}})}});
+ }else{
+  hmRows=rows.map(function(r){return{label:r.id,sub:r.intent,vals:plats.map(function(p){var c=r.cells[p.key];
+   var v=cellVal(c,m);return{v:v,t:isNaN(v)?(c.note&&c.m==="NA"?c.note:"—"):"",note:c.note,agg:false}})}});
+ }
+ var hm=$("heatmap");
+ hm.style.gridTemplateColumns="auto repeat("+plats.length+",minmax(58px,1fr))";
+ var h='<div class="h"></div>'+plats.map(function(p){return'<div class="h">'+esc(p.label)+"</div>"}).join("");
+ hmRows.forEach(function(r){
+  h+='<div class="r">'+esc(r.label)+(r.sub?"<small>"+esc(r.sub)+"</small>":"")+"</div>";
+  r.vals.forEach(function(c,i){
+   var tip=r.label+" · "+plats[i].label;
+   if(isNaN(c.v)){h+='<div class="cell na" title="'+esc(tip+"：未计分")+'">'+esc(c.t)+"</div>";return}
+   var col=color(m,c.v,max),txt=fmtHm(m,c.v,c.agg)+(c.note==="拒答"?"·拒答":"");
+   h+='<div class="cell" style="background:'+col.bg+";color:"+col.fg+'" title="'+esc(tip+"："+txt)+'">'+esc(txt)+"</div>";
+  });
+ });
+ hm.innerHTML=h;
+ var lg=m==="accuracy"?'准确度 0<span class="grad" style="background:linear-gradient(90deg,'+PAL.accuracy[0]+","+PAL.accuracy[1]+')"></span>3':
+  S.view==="intent"?'0%<span class="grad" style="background:linear-gradient(90deg,'+PAL[m][0]+","+PAL[m][1]+')"></span>100%':
+  '<span><span class="sw" style="background:'+PAL[m][1]+'"></span>Y</span><span><span class="sw" style="background:'+PAL[m][0]+';border:1px solid #dde1e7"></span>N</span>';
+ $("legend").innerHTML=lg+'<span><span class="sw" style="background:repeating-linear-gradient(45deg,#f3f4f6,#f3f4f6 3px,#e1e4e9 3px,#e1e4e9 6px)"></span>未计分</span>'+(m==="confusion"?"<span>（混淆：颜色越红越差）</span>":"");
+ var t="<thead><tr><th>prompt</th><th>意图</th>"+plats.map(function(p){return'<th class="c">'+esc(p.label)+"</th>"}).join("")+"</tr></thead><tbody>";
+ rows.forEach(function(r){t+="<tr><td>"+r.id+"</td><td>"+r.intent+"</td>"+plats.map(function(p){return'<td class="c">'+esc(cellLabel(r.cells[p.key],m))+"</td>"}).join("")+"</tr>"});
+ $("promptTbl").innerHTML=t+"</tbody>";
+}
+function initSelects(){
+ $("selPeriod").innerHTML=PERIODS.map(function(p,i){return'<option value="'+i+'">'+esc(p.label)+"</option>"}).join("");
+ $("selPeriod").value=String(S.period);
+ $("selPlatform").innerHTML='<option value="all">全部平台</option>'+PLATFORMS.map(function(p){return'<option value="'+p.key+'">'+esc(p.label)+"</option>"}).join("");
+ $("selIntent").innerHTML='<option value="all">全部意图</option>'+Object.keys(INTENTS).map(function(k){return'<option value="'+k+'">'+esc(INTENTS[k])+"</option>"}).join("");
+ $("selPeriod").onchange=function(){S.period=+this.value;renderPrompts()};
+ $("selPlatform").onchange=function(){S.platform=this.value;renderPrompts()};
+ $("selIntent").onchange=function(){S.intent=this.value;renderPrompts()};
+}
+
+/* --- 每周趋势 --- */
+var LINE_COLORS=["#2f6fed","#e07b39","#1f9d6b","#8e5bd6","#d64545","#5b6b82","#c2a000","#0aa3b5"];
+function renderTrend(){
+ seg("segTrend",METRICS,"trend",renderTrend);
+ var m=S.trend,max=m==="accuracy"?3:m==="confusion"?Math.max(20,Math.max.apply(null,PERIODS.map(function(p){return Math.max.apply(null,PLATFORMS.map(function(pl){return p.stats[pl.key]?p.stats[pl.key].confusion:0}))}))):100;
+ var W=760,H=280,L=44,R=120,T=16,B=36,n=PERIODS.length;
+ function x(i){return n===1?L+(W-L-R)/2:L+i*(W-L-R)/(n-1)}
+ function y(v){return T+(H-T-B)*(1-v/max)}
+ var s='<svg viewBox="0 0 '+W+" "+H+'" width="100%" style="max-width:'+W+'px;display:block" role="img" aria-label="每周趋势">';
+ for(var g=0;g<=4;g++){var gv=max*g/4,gy=y(gv);s+='<line x1="'+L+'" x2="'+(W-R)+'" y1="'+gy+'" y2="'+gy+'" stroke="#e6e9ee"/><text x="'+(L-6)+'" y="'+(gy+4)+'" font-size="11" text-anchor="end" fill="#5d6676">'+(m==="accuracy"?gv.toFixed(1):Math.round(gv)+(m==="confusion"?"":"%"))+"</text>"}
+ PERIODS.forEach(function(p,i){s+='<text x="'+x(i)+'" y="'+(H-12)+'" font-size="11" text-anchor="middle" fill="#5d6676">'+esc(p.date)+"</text>"});
+ var labels=[];
+ PLATFORMS.forEach(function(pl,k){
+  var c=LINE_COLORS[k%LINE_COLORS.length],pts=[];
+  PERIODS.forEach(function(p,i){var st=p.stats[pl.key];if(st)pts.push([x(i),y(statVal(st,m)),statVal(st,m)])});
+  if(!pts.length)return;
+  if(pts.length>1)s+='<polyline fill="none" stroke="'+c+'" stroke-width="2.2" points="'+pts.map(function(q){return q[0]+","+q[1]}).join(" ")+'"/>';
+  pts.forEach(function(q){s+='<circle cx="'+q[0]+'" cy="'+q[1]+'" r="4.5" fill="'+c+'"><title>'+esc(pl.label+"："+disp(m,q[2]))+"</title></circle>"});
+  var last=pts[pts.length-1];labels.push({y:last[1],t:pl.label+" "+disp(m,last[2]),c:c,x:last[0]});
+ });
+ labels.sort(function(a,b){return a.y-b.y});for(var i=1;i<labels.length;i++)if(labels[i].y-labels[i-1].y<14)labels[i].y=labels[i-1].y+14;
+ labels.forEach(function(l){s+='<text x="'+(l.x+10)+'" y="'+(l.y+4)+'" font-size="12" fill="'+l.c+'">'+esc(l.t)+"</text>"});
+ $("trendChart").innerHTML=s+"</svg>";
+ var t="<thead><tr><th>日期</th>"+PLATFORMS.map(function(p){return'<th class="num">'+esc(p.label)+"</th>"}).join("")+"<th>说明</th></tr></thead><tbody>";
+ PERIODS.forEach(function(p){t+="<tr><td>"+esc(p.date)+"</td>"+PLATFORMS.map(function(pl){var st=p.stats[pl.key];
+  var v=!st?"—":m==="mention"?st.mentionShort:m==="accuracy"?st.accuracy.toFixed(2):m==="ours"?st.ours:String(st.confusion);
+  return'<td class="num">'+esc(v)+"</td>"}).join("")+"<td>"+esc(p.note)+"</td></tr>"});
+ $("trendTbl").innerHTML=t+"</tbody>";
+}
+initSelects();renderBase();renderPrompts();renderTrend();
+</script>
+</body>
+</html>
