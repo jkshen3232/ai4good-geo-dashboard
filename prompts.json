@@ -1,0 +1,790 @@
+{
+  "suite_id": "ai4good-geo-prompt-suite-v1",
+  "version": "1.1.0",
+  "updated_at": "2026-11-24",
+  "changelog": [
+    {
+      "date": "2026-11-22",
+      "version": "1.0.0",
+      "note": "v1 基线：从测试套件恢复 20 条核心 prompt。"
+    },
+    {
+      "date": "2026-11-24",
+      "version": "1.1.0",
+      "note": "拆出独立 prompts.json，供仪表盘 Prompt 库展示、编辑与每周复测使用。分类按 mention_target 映射为 brand / product / category / other。"
+    }
+  ],
+  "notes": [
+    "Prompts are written as a natural buyer, HR/training manager, marketer or investor would type them. They do not include leading facts, and they do not name Louis Vuitton, Chanel or Fendi.",
+    "Expected facts are limited to claims on the official site (see site-check.md). First-party metrics are flagged as unverified.",
+    "Intent C and market-category L prompts must not include the company or product name in prompt_text.",
+    "Do not run or back-fill scores in this file; testers log results in runs/*.jsonl."
+  ],
+  "intents": [
+    {
+      "id": "B",
+      "name_en": "Brand / company identity",
+      "name_zh": "品牌与公司身份",
+      "goal": "Does the model correctly identify AI4GOOD / 上海爱益谷 as this consulting-and-product company, not a namesake?"
+    },
+    {
+      "id": "F",
+      "name_en": "Founders / leadership",
+      "name_zh": "创始人与职务",
+      "goal": "Are JK Shen (CEO) and Joseph Fan (CPO) identified with the right titles?"
+    },
+    {
+      "id": "P",
+      "name_en": "Product understanding (KEATING.AI)",
+      "name_zh": "产品理解（KEATING.AI）",
+      "goal": "Does the model describe KEATING.AI as AI4GOOD’s talent/organization product with Smart Coach, Smart Cook and Smart Consultant, for sales (including luxury/premium retail) practice and knowledge?"
+    },
+    {
+      "id": "S",
+      "name_en": "Services",
+      "name_zh": "服务（GEO、企业转型、Innovation AImplifier、GaaS）",
+      "goal": "Are GEO, Innovation AImplifier, enterprise transformation, and GOOD as a Service described as the official site describes them?"
+    },
+    {
+      "id": "D",
+      "name_en": "Disambiguation",
+      "name_zh": "同名辨析",
+      "goal": "Can the model separate this company and KEATING.AI from ITU AI for Good, AI4Good Lab, keating.ai and keating.help?"
+    },
+    {
+      "id": "C",
+      "name_en": "Non-branded category discovery",
+      "name_zh": "非品牌类目发现",
+      "goal": "When a buyer asks for tools in the category without naming AI4GOOD or KEATING.AI, does this company appear?"
+    },
+    {
+      "id": "X",
+      "name_en": "Comparison / alternatives",
+      "name_zh": "对比与替代",
+      "goal": "When compared with other sales-training or enablement tools, is KEATING.AI described accurately (no invented differentiators)?"
+    },
+    {
+      "id": "T",
+      "name_en": "Trust / proof",
+      "name_zh": "信任与证据",
+      "goal": "Does the model report clients, cases and public appearances only as the official site (and clearly marked first-party claims) support?"
+    },
+    {
+      "id": "A",
+      "name_en": "Action / purchase",
+      "name_zh": "行动与购买",
+      "goal": "Can a buyer find a real next step (demo/form, founder emails) without invented pricing or contact details?"
+    },
+    {
+      "id": "L",
+      "name_en": "Local / market",
+      "name_zh": "地域与市场",
+      "goal": "Does the model place the company in Shanghai / China, Singapore and North America / Canada, and can market-scoped category queries surface it?"
+    }
+  ],
+  "core_prompt_ids": [
+    "B-ZH-01",
+    "B-EN-01",
+    "F-ZH-01",
+    "F-EN-01",
+    "P-ZH-01",
+    "P-ZH-03",
+    "P-EN-01",
+    "S-ZH-02",
+    "S-EN-01",
+    "D-ZH-01",
+    "D-EN-02",
+    "C-ZH-01",
+    "C-ZH-03",
+    "C-EN-01",
+    "X-EN-01",
+    "T-ZH-01",
+    "T-EN-01",
+    "A-ZH-01",
+    "A-EN-02",
+    "L-EN-01"
+  ],
+  "prompts": [
+    {
+      "id": "B-ZH-01",
+      "language": "zh",
+      "intent": "B",
+      "category": "brand",
+      "mention_target": "company",
+      "core": true,
+      "tags": [],
+      "prompt_text": "上海爱益谷科技有限公司是做什么的？",
+      "expected_facts": [
+        {
+          "fact": "上海爱益谷科技有限公司是 AI4GOOD 的法定名称。",
+          "source_urls": [
+            "https://ai-4good.ai/"
+          ]
+        },
+        {
+          "fact": "公司做 AI 咨询与产品，让人与 AI 协作、创造真实价值。",
+          "source_urls": [
+            "https://ai-4good.ai/"
+          ]
+        },
+        {
+          "fact": "产品与服务包括 KEATING.AI、GEO、Innovation AImplifier、企业转型。",
+          "source_urls": [
+            "https://ai-4good.ai/"
+          ]
+        }
+      ],
+      "red_flags": [
+        "Treats this company as the ITU/UN AI for Good initiative (aiforgood.itu.int).",
+        "Mixes this company with AI4Good Lab, ai4good.com, ai4good.org, or another same-name organisation.",
+        "Describes current products only as 爱老师 / 爱课堂 / 爱伴老 (retired WordPress naming; not on the 22 Nov 2026 site).",
+        "Gives the old 徐汇龙文路 street address or inquiry@ / hr@ as if they were published on the current site (they are not on the pages fetched 22 Nov 2026).",
+        "Names Joseph Fan / 范宇轩 as CEO, or as the sole leader, omitting JK Shen / 沈佳齐 as Co-founder & CEO.",
+        "Invented founders or titles not on the official site."
+      ]
+    },
+    {
+      "id": "B-EN-01",
+      "language": "en",
+      "intent": "B",
+      "category": "brand",
+      "mention_target": "company",
+      "core": true,
+      "tags": [],
+      "prompt_text": "What is AI4GOOD?",
+      "expected_facts": [
+        {
+          "fact": "AI4GOOD is an AI consulting and product company (legal name 上海爱益谷科技有限公司).",
+          "source_urls": [
+            "https://ai-4good.ai/company-en",
+            "https://ai-4good.ai/"
+          ]
+        },
+        {
+          "fact": "It builds products and services that bring people and AI together to create real value.",
+          "source_urls": [
+            "https://ai-4good.ai/company-en"
+          ]
+        },
+        {
+          "fact": "Offerings include KEATING.AI, GEO, Innovation AImplifier, and enterprise transformation.",
+          "source_urls": [
+            "https://ai-4good.ai/company-en"
+          ]
+        },
+        {
+          "fact": "Teams collaborate across Shanghai, Singapore and North America.",
+          "source_urls": [
+            "https://ai-4good.ai/company-en"
+          ]
+        }
+      ],
+      "red_flags": [
+        "Treats this company as the ITU/UN AI for Good initiative (aiforgood.itu.int).",
+        "Mixes this company with AI4Good Lab, ai4good.com, ai4good.org, or another same-name organisation.",
+        "Describes current products only as 爱老师 / 爱课堂 / 爱伴老 (retired WordPress naming; not on the 22 Nov 2026 site).",
+        "Gives the old 徐汇龙文路 street address or inquiry@ / hr@ as if they were published on the current site (they are not on the pages fetched 22 Nov 2026)."
+      ]
+    },
+    {
+      "id": "F-ZH-01",
+      "language": "zh",
+      "intent": "F",
+      "category": "brand",
+      "mention_target": "company",
+      "core": true,
+      "tags": [],
+      "prompt_text": "AI4GOOD的创始人是谁？谁是CEO？",
+      "expected_facts": [
+        {
+          "fact": "沈佳齐 · JK Shen 是联合创始人兼 CEO。",
+          "source_urls": [
+            "https://ai-4good.ai/"
+          ]
+        },
+        {
+          "fact": "范宇轩 · Joseph Fan 是联合创始人兼 CPO，不是 CEO。",
+          "source_urls": [
+            "https://ai-4good.ai/"
+          ]
+        }
+      ],
+      "red_flags": [
+        "Names Joseph Fan / 范宇轩 as CEO, or as the sole leader, omitting JK Shen / 沈佳齐 as Co-founder & CEO.",
+        "Invented founders or titles not on the official site.",
+        "Treats this company as the ITU/UN AI for Good initiative (aiforgood.itu.int).",
+        "Mixes this company with AI4Good Lab, ai4good.com, ai4good.org, or another same-name organisation."
+      ]
+    },
+    {
+      "id": "F-EN-01",
+      "language": "en",
+      "intent": "F",
+      "category": "brand",
+      "mention_target": "company",
+      "core": true,
+      "tags": [],
+      "prompt_text": "Who is the CEO of AI4GOOD?",
+      "expected_facts": [
+        {
+          "fact": "JK Shen (沈佳齐) is Co-founder & CEO.",
+          "source_urls": [
+            "https://ai-4good.ai/company-en"
+          ]
+        },
+        {
+          "fact": "Joseph Fan is Co-founder & CPO, not CEO.",
+          "source_urls": [
+            "https://ai-4good.ai/company-en"
+          ]
+        }
+      ],
+      "red_flags": [
+        "Names Joseph Fan / 范宇轩 as CEO, or as the sole leader, omitting JK Shen / 沈佳齐 as Co-founder & CEO.",
+        "Invented founders or titles not on the official site.",
+        "Treats this company as the ITU/UN AI for Good initiative (aiforgood.itu.int).",
+        "Mixes this company with AI4Good Lab, ai4good.com, ai4good.org, or another same-name organisation."
+      ]
+    },
+    {
+      "id": "P-ZH-01",
+      "language": "zh",
+      "intent": "P",
+      "category": "product",
+      "mention_target": "product",
+      "core": true,
+      "tags": [],
+      "prompt_text": "KEATING.AI是什么？",
+      "expected_facts": [
+        {
+          "fact": "KEATING.AI 是 AI4GOOD 旗下产品，定位为人才与组织的价值创造引擎。",
+          "source_urls": [
+            "https://ai-4good.ai/keating",
+            "https://ai-4good.ai/faq"
+          ]
+        },
+        {
+          "fact": "将智能陪练、知识创作与组织洞察连在一个产品中。",
+          "source_urls": [
+            "https://ai-4good.ai/keating"
+          ]
+        },
+        {
+          "fact": "三个方案：Smart Coach 智能教练、Smart Cook 智能内容大厨、Smart Consultant 智能顾问。",
+          "source_urls": [
+            "https://ai-4good.ai/keating",
+            "https://ai-4good.ai/faq"
+          ]
+        },
+        {
+          "fact": "名字来自《死亡诗社》中的约翰·基廷老师，不是物理学家 Brian Keating 的网站。",
+          "source_urls": [
+            "https://ai-4good.ai/keating"
+          ]
+        }
+      ],
+      "red_flags": [
+        "Identifies KEATING.AI as keating.ai (Brian Keating / UC San Diego personal site).",
+        "Identifies KEATING.AI as keating.help or another unrelated Keating project.",
+        "Explains the name only as a person named Keating, without the product by AI4GOOD, when the question is about the product.",
+        "Describes current products only as 爱老师 / 爱课堂 / 爱伴老 (retired WordPress naming; not on the 22 Nov 2026 site).",
+        "Gives the old 徐汇龙文路 street address or inquiry@ / hr@ as if they were published on the current site (they are not on the pages fetched 22 Nov 2026)."
+      ]
+    },
+    {
+      "id": "P-ZH-03",
+      "language": "zh",
+      "intent": "P",
+      "category": "product",
+      "mention_target": "product",
+      "core": true,
+      "tags": [],
+      "prompt_text": "Smart Coach、Smart Cook和Smart Consultant分别是什么？",
+      "expected_facts": [
+        {
+          "fact": "它们是 KEATING.AI（AI4GOOD 产品）的三个方案。",
+          "source_urls": [
+            "https://ai-4good.ai/keating",
+            "https://ai-4good.ai/faq"
+          ]
+        },
+        {
+          "fact": "Smart Coach 智能教练：帮助销售人员更好地学习与销售（游戏化学习 + AI 客户角色扮演）。",
+          "source_urls": [
+            "https://ai-4good.ai/keating",
+            "https://ai-4good.ai/faq"
+          ]
+        },
+        {
+          "fact": "Smart Cook 智能内容大厨：支持培训团队创作内容、梳理知识；含人工审核。",
+          "source_urls": [
+            "https://ai-4good.ai/keating",
+            "https://ai-4good.ai/faq"
+          ]
+        },
+        {
+          "fact": "Smart Consultant 智能顾问：帮助组织看清练习表现、确定改进重点，并积累可复用知识资产。",
+          "source_urls": [
+            "https://ai-4good.ai/keating",
+            "https://ai-4good.ai/faq"
+          ]
+        }
+      ],
+      "red_flags": [
+        "Assigns the three names to a different vendor.",
+        "Swaps the modules’ functions.",
+        "Identifies KEATING.AI as keating.ai (Brian Keating / UC San Diego personal site).",
+        "Identifies KEATING.AI as keating.help or another unrelated Keating project.",
+        "Explains the name only as a person named Keating, without the product by AI4GOOD, when the question is about the product."
+      ]
+    },
+    {
+      "id": "P-EN-01",
+      "language": "en",
+      "intent": "P",
+      "category": "product",
+      "mention_target": "product",
+      "core": true,
+      "tags": [],
+      "prompt_text": "What is KEATING.AI?",
+      "expected_facts": [
+        {
+          "fact": "KEATING.AI is a product by AI4GOOD: a value-creation engine for talent and organization.",
+          "source_urls": [
+            "https://ai-4good.ai/keating-en",
+            "https://ai-4good.ai/faq-en"
+          ]
+        },
+        {
+          "fact": "It connects AI coaching, knowledge creation and organizational insights in one product.",
+          "source_urls": [
+            "https://ai-4good.ai/keating-en"
+          ]
+        },
+        {
+          "fact": "Three solutions: Smart Coach, Smart Cook, Smart Consultant.",
+          "source_urls": [
+            "https://ai-4good.ai/keating-en"
+          ]
+        },
+        {
+          "fact": "The name is inspired by John Keating in Dead Poets Society, not the keating.ai physics site or keating.help.",
+          "source_urls": [
+            "https://ai-4good.ai/keating-en"
+          ]
+        }
+      ],
+      "red_flags": [
+        "Identifies KEATING.AI as keating.ai (Brian Keating / UC San Diego personal site).",
+        "Identifies KEATING.AI as keating.help or another unrelated Keating project.",
+        "Explains the name only as a person named Keating, without the product by AI4GOOD, when the question is about the product.",
+        "Describes current products only as 爱老师 / 爱课堂 / 爱伴老 (retired WordPress naming; not on the 22 Nov 2026 site).",
+        "Gives the old 徐汇龙文路 street address or inquiry@ / hr@ as if they were published on the current site (they are not on the pages fetched 22 Nov 2026)."
+      ]
+    },
+    {
+      "id": "S-ZH-02",
+      "language": "zh",
+      "intent": "S",
+      "category": "other",
+      "mention_target": "service",
+      "core": true,
+      "tags": [],
+      "prompt_text": "AI4GOOD的企业AI转型服务包括什么？",
+      "expected_facts": [
+        {
+          "fact": "通过咨询与工作坊，从场景识别推进到技术落地。",
+          "source_urls": [
+            "https://ai-4good.ai/transformation",
+            "https://ai-4good.ai/"
+          ]
+        },
+        {
+          "fact": "方法包括 AI4GOOD 4A 与 AI4GOOD GOOD；工作包含业务梳理、机会评估、路线图、用例设计、技术实施与变革管理。",
+          "source_urls": [
+            "https://ai-4good.ai/transformation"
+          ]
+        },
+        {
+          "fact": "官网还提供 AI 工作坊系列，并提到可在 1–3 个月共创速赢 Demo。",
+          "source_urls": [
+            "https://ai-4good.ai/transformation"
+          ]
+        }
+      ],
+      "red_flags": [
+        "Describes current products only as 爱老师 / 爱课堂 / 爱伴老 (retired WordPress naming; not on the 22 Nov 2026 site).",
+        "Gives the old 徐汇龙文路 street address or inquiry@ / hr@ as if they were published on the current site (they are not on the pages fetched 22 Nov 2026).",
+        "Collapses all of AI4GOOD into only KEATING.AI and ignores consulting / workshops.",
+        "Invented delivery SLAs not on the site."
+      ]
+    },
+    {
+      "id": "S-EN-01",
+      "language": "en",
+      "intent": "S",
+      "category": "other",
+      "mention_target": "service",
+      "core": true,
+      "tags": [],
+      "prompt_text": "What is AI4GOOD's GEO service?",
+      "expected_facts": [
+        {
+          "fact": "Elevated brand engagement for human and AI, starting with generative engine optimization: be found, understood, trusted and recommended.",
+          "source_urls": [
+            "https://ai-4good.ai/geo-en",
+            "https://ai-4good.ai/faq-en"
+          ]
+        },
+        {
+          "fact": "Three solutions: Navigator, Creator, Connector.",
+          "source_urls": [
+            "https://ai-4good.ai/geo-en",
+            "https://ai-4good.ai/faq-en"
+          ]
+        },
+        {
+          "fact": "Covers global and Chinese AI ecosystems, including ChatGPT, Perplexity, Gemini, Doubao, Qwen and Yuanbao.",
+          "source_urls": [
+            "https://ai-4good.ai/faq-en"
+          ]
+        },
+        {
+          "fact": "AI4GOOD does not guarantee fixed rankings.",
+          "source_urls": [
+            "https://ai-4good.ai/faq-en",
+            "https://ai-4good.ai/geo-en"
+          ]
+        }
+      ],
+      "red_flags": [
+        "Claims AI4GOOD guarantees fixed AI rankings (the FAQ says it does not).",
+        "Treats this company as the ITU/UN AI for Good initiative (aiforgood.itu.int).",
+        "Mixes this company with AI4Good Lab, ai4good.com, ai4good.org, or another same-name organisation.",
+        "Describes it only as classic SEO."
+      ]
+    },
+    {
+      "id": "D-ZH-01",
+      "language": "zh",
+      "intent": "D",
+      "category": "brand",
+      "mention_target": "company",
+      "core": true,
+      "tags": [],
+      "prompt_text": "AI4GOOD和联合国的AI for Good是同一家吗？",
+      "expected_facts": [
+        {
+          "fact": "不是同一家。上海爱益谷科技有限公司（品牌 AI4GOOD，网站 ai-4good.ai）是商业性的 AI 咨询与产品公司。",
+          "source_urls": [
+            "https://ai-4good.ai/"
+          ]
+        },
+        {
+          "fact": "联合国 / ITU 的 AI for Good 是另一项倡议，不能混为同一主体。",
+          "source_urls": [
+            "https://ai-4good.ai/"
+          ]
+        }
+      ],
+      "red_flags": [
+        "Treats this company as the ITU/UN AI for Good initiative (aiforgood.itu.int).",
+        "Mixes this company with AI4Good Lab, ai4good.com, ai4good.org, or another same-name organisation.",
+        "Answers that they are the same organisation or that the Shanghai company runs the UN programme."
+      ]
+    },
+    {
+      "id": "D-EN-02",
+      "language": "en",
+      "intent": "D",
+      "category": "product",
+      "mention_target": "product",
+      "core": true,
+      "tags": [],
+      "prompt_text": "Is KEATING.AI the same as keating.ai or keating.help?",
+      "expected_facts": [
+        {
+          "fact": "No. KEATING.AI is AI4GOOD’s product, documented at ai-4good.ai/keating-en, named after John Keating in Dead Poets Society.",
+          "source_urls": [
+            "https://ai-4good.ai/keating-en"
+          ]
+        },
+        {
+          "fact": "keating.ai and keating.help are different sites/projects, not the official product site.",
+          "source_urls": [
+            "https://ai-4good.ai/keating-en"
+          ]
+        }
+      ],
+      "red_flags": [
+        "Identifies KEATING.AI as keating.ai (Brian Keating / UC San Diego personal site).",
+        "Identifies KEATING.AI as keating.help or another unrelated Keating project.",
+        "Explains the name only as a person named Keating, without the product by AI4GOOD, when the question is about the product.",
+        "Treats any of the three as the same product or official homepage."
+      ]
+    },
+    {
+      "id": "C-ZH-01",
+      "language": "zh",
+      "intent": "C",
+      "category": "category",
+      "mention_target": "category",
+      "core": true,
+      "tags": [],
+      "prompt_text": "奢侈品或高端零售有哪些AI导购陪练或销售角色扮演工具？",
+      "expected_facts": [
+        {
+          "fact": "若被提及：KEATING.AI 是 AI4GOOD 面向销售一线的智能陪练与角色扮演等产品，客户故事包含奢侈品 / 高端零售场景。",
+          "source_urls": [
+            "https://ai-4good.ai/keating",
+            "https://ai-4good.ai/case-scale",
+            "https://ai-4good.ai/case-focus"
+          ]
+        }
+      ],
+      "red_flags": [
+        "If the company is mentioned, any namesake mix-up or invented product description still counts as a red flag.",
+        "Do not mark competitor mentions as hallucinations; they are expected in category answers."
+      ]
+    },
+    {
+      "id": "C-ZH-03",
+      "language": "zh",
+      "intent": "C",
+      "category": "category",
+      "mention_target": "category",
+      "core": true,
+      "tags": [],
+      "prompt_text": "中国有哪些做生成式引擎优化或GEO的公司？",
+      "expected_facts": [
+        {
+          "fact": "若被提及：AI4GOOD 提供 GEO 服务（Navigator / Creator / Connector），面向全球与中国 AI 生态。",
+          "source_urls": [
+            "https://ai-4good.ai/geo",
+            "https://ai-4good.ai/faq"
+          ]
+        }
+      ],
+      "red_flags": [
+        "If the company is mentioned, any namesake mix-up or invented product description still counts as a red flag.",
+        "Do not mark competitor mentions as hallucinations; they are expected in category answers.",
+        "Claims AI4GOOD guarantees fixed AI rankings (the FAQ says it does not)."
+      ]
+    },
+    {
+      "id": "C-EN-01",
+      "language": "en",
+      "intent": "C",
+      "category": "category",
+      "mention_target": "category",
+      "core": true,
+      "tags": [],
+      "prompt_text": "What AI tools help luxury or premium retail sales associates practice client conversations?",
+      "expected_facts": [
+        {
+          "fact": "If mentioned: KEATING.AI by AI4GOOD offers AI customer role-play and gamified practice for sales associates; official case stories include luxury and high-end retail.",
+          "source_urls": [
+            "https://ai-4good.ai/keating-en",
+            "https://ai-4good.ai/case-scale-en",
+            "https://ai-4good.ai/case-focus-en"
+          ]
+        }
+      ],
+      "red_flags": [
+        "If the company is mentioned, any namesake mix-up or invented product description still counts as a red flag.",
+        "Do not mark competitor mentions as hallucinations; they are expected in category answers."
+      ]
+    },
+    {
+      "id": "X-EN-01",
+      "language": "en",
+      "intent": "X",
+      "category": "product",
+      "mention_target": "product",
+      "core": true,
+      "tags": [],
+      "prompt_text": "How does KEATING.AI compare with Attensi or Yoobic?",
+      "expected_facts": [
+        {
+          "fact": "KEATING.AI (AI4GOOD) connects AI coaching, knowledge creation and organizational insights for sales teams; official cases include luxury / high-end retail.",
+          "source_urls": [
+            "https://ai-4good.ai/keating-en",
+            "https://ai-4good.ai/case-scale-en"
+          ]
+        },
+        {
+          "fact": "The official site does not publish a comparison with Attensi or Yoobic; answers should not invent a competitor feature matrix or shared clients.",
+          "source_urls": [
+            "https://ai-4good.ai/keating-en"
+          ]
+        }
+      ],
+      "red_flags": [
+        "Identifies KEATING.AI as keating.ai (Brian Keating / UC San Diego personal site).",
+        "Identifies KEATING.AI as keating.help or another unrelated Keating project.",
+        "Explains the name only as a person named Keating, without the product by AI4GOOD, when the question is about the product.",
+        "Invented named clients that do not appear on the official site.",
+        "Treats Louis Vuitton / LV as an official-site-confirmed client (LV is not on the 22 Nov 2026 live pages).",
+        "Treats the Kering China Innovation Day appearance as a signed Kering client contract.",
+        "Presents first-party case metrics as independently audited guarantees.",
+        "Invented official competitive claims or prices."
+      ]
+    },
+    {
+      "id": "T-ZH-01",
+      "language": "zh",
+      "intent": "T",
+      "category": "brand",
+      "mention_target": "company",
+      "core": true,
+      "tags": [],
+      "prompt_text": "AI4GOOD有哪些客户或合作案例？",
+      "expected_facts": [
+        {
+          "fact": "客户故事里的品牌均未点名：奢侈品零售规模化培训、高端零售单产品问题、消费电子 GEO、高端消费品 GEO、美国金融机构 GEO、移动支付与科技 3C 创新案例。",
+          "source_urls": [
+            "https://ai-4good.ai/cases",
+            "https://ai-4good.ai/case-scale",
+            "https://ai-4good.ai/case-focus"
+          ]
+        },
+        {
+          "fact": "官网“客户伙伴”标识的 logo alt 包括 Chanel、Fendi、支付宝、华为、火山引擎、雀巢、李锦记、Publicis Groupe、腾讯研究院 S-Tech 工作室。",
+          "source_urls": [
+            "https://ai-4good.ai/",
+            "https://ai-4good.ai/keating"
+          ]
+        },
+        {
+          "fact": "新闻页写明 2026 年在 Kering China Innovation Day 展示了 KEATING.AI，这是活动出场，不等同于已公布的签约客户关系。",
+          "source_urls": [
+            "https://ai-4good.ai/news"
+          ]
+        }
+      ],
+      "red_flags": [
+        "Invented named clients that do not appear on the official site.",
+        "Treats Louis Vuitton / LV as an official-site-confirmed client (LV is not on the 22 Nov 2026 live pages).",
+        "Treats the Kering China Innovation Day appearance as a signed Kering client contract.",
+        "Presents first-party case metrics as independently audited guarantees."
+      ]
+    },
+    {
+      "id": "T-EN-01",
+      "language": "en",
+      "intent": "T",
+      "category": "product",
+      "mention_target": "product",
+      "core": true,
+      "tags": [],
+      "prompt_text": "What proof or case studies does KEATING.AI have?",
+      "expected_facts": [
+        {
+          "fact": "Two unnamed official stories: luxury retail at scale (2× course completion, 30–50% faster production, 30–40% cost reduction) and a high-end retail product brief (30+ associates, +19 average score, 25+ golden lines). First-party claims.",
+          "source_urls": [
+            "https://ai-4good.ai/case-scale-en",
+            "https://ai-4good.ai/case-focus-en",
+            "https://ai-4good.ai/cases-en"
+          ]
+        },
+        {
+          "fact": "FAQ: results in client stories reflect their own contexts and should not be treated as guarantees for other projects.",
+          "source_urls": [
+            "https://ai-4good.ai/faq-en"
+          ]
+        }
+      ],
+      "red_flags": [
+        "Invented named clients that do not appear on the official site.",
+        "Treats Louis Vuitton / LV as an official-site-confirmed client (LV is not on the 22 Nov 2026 live pages).",
+        "Treats the Kering China Innovation Day appearance as a signed Kering client contract.",
+        "Presents first-party case metrics as independently audited guarantees."
+      ]
+    },
+    {
+      "id": "A-ZH-01",
+      "language": "zh",
+      "intent": "A",
+      "category": "brand",
+      "mention_target": "company",
+      "core": true,
+      "tags": [],
+      "prompt_text": "怎么联系AI4GOOD或预约KEATING.AI的Demo？",
+      "expected_facts": [
+        {
+          "fact": "通过官网预约 Demo / 联系表单，说明团队和希望解决的业务问题。",
+          "source_urls": [
+            "https://ai-4good.ai/keating",
+            "https://ai-4good.ai/faq",
+            "https://ai-4good.ai/"
+          ]
+        },
+        {
+          "fact": "官网公开的邮箱是联合创始人 jk.shen@ai-4good.ai 与 joseph.fan@ai-4good.ai（出现在首页）。",
+          "source_urls": [
+            "https://ai-4good.ai/"
+          ]
+        },
+        {
+          "fact": "当前抓取的页面没有公开总机电话或公司街道地址，也没有 /contact 页面。",
+          "source_urls": [
+            "https://ai-4good.ai/"
+          ]
+        }
+      ],
+      "red_flags": [
+        "Invented price list, packages, or a free-trial offer not published on the official site.",
+        "Describes current products only as 爱老师 / 爱课堂 / 爱伴老 (retired WordPress naming; not on the 22 Nov 2026 site).",
+        "Gives the old 徐汇龙文路 street address or inquiry@ / hr@ as if they were published on the current site (they are not on the pages fetched 22 Nov 2026).",
+        "Invented phone numbers or a street address.",
+        "Invented a general inbox not on the current site."
+      ]
+    },
+    {
+      "id": "A-EN-02",
+      "language": "en",
+      "intent": "A",
+      "category": "product",
+      "mention_target": "product",
+      "core": true,
+      "tags": [],
+      "prompt_text": "How much does KEATING.AI cost?",
+      "expected_facts": [
+        {
+          "fact": "No public price list or packages on the official site. The contact form includes a budget-range field. Pricing is through enquiry / demo.",
+          "source_urls": [
+            "https://ai-4good.ai/keating-en",
+            "https://ai-4good.ai/faq-en"
+          ]
+        }
+      ],
+      "red_flags": [
+        "Invented price list, packages, or a free-trial offer not published on the official site."
+      ]
+    },
+    {
+      "id": "L-EN-01",
+      "language": "en",
+      "intent": "L",
+      "category": "brand",
+      "mention_target": "company",
+      "core": true,
+      "tags": [],
+      "prompt_text": "Where is AI4GOOD based, and which markets does it work in?",
+      "expected_facts": [
+        {
+          "fact": "Legal entity is in China (上海爱益谷科技有限公司). Copy says teams collaborate across Shanghai, Singapore and North America; map labels Canada, China and Singapore.",
+          "source_urls": [
+            "https://ai-4good.ai/company-en",
+            "https://ai-4good.ai/"
+          ]
+        }
+      ],
+      "red_flags": [
+        "Invented offices or a US headquarters not stated on the site.",
+        "Treats this company as the ITU/UN AI for Good initiative (aiforgood.itu.int).",
+        "Mixes this company with AI4Good Lab, ai4good.com, ai4good.org, or another same-name organisation."
+      ]
+    }
+  ]
+}

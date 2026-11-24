@@ -64,6 +64,54 @@ svg text{font-family:inherit}
 .totop{position:fixed;right:16px;bottom:16px;background:var(--card);border:1px solid var(--line);border-radius:999px;padding:8px 14px;font-size:13px;color:var(--accent);text-decoration:none;box-shadow:0 2px 8px rgba(0,0,0,.08)}
 footer{text-align:center;color:var(--muted);font-size:13px;margin-top:28px}
 @media (max-width:600px){.wrap{padding:20px 12px 60px}h1{font-size:22px}section{padding:16px 13px}.bar-row{grid-template-columns:84px 1fr 52px;font-size:13px}.hm .cell{min-width:58px;height:34px;font-size:12px}}
+
+/* prompt library + heatmap links */
+.hm-link{color:inherit;text-decoration:none;border-bottom:1px dashed #b7c4de}
+.hm-link:hover{color:var(--accent)}
+.hm .r,.pl-card{scroll-margin-top:16px}
+.hm .r.flash,.hm .cell.flash,.pl-card.flash{box-shadow:0 0 0 2px var(--accent);background:var(--accent-soft)}
+.pl-toolbar{justify-content:flex-end}
+.pl-filters{margin:12px 0;gap:10px;align-items:center}
+.pl-filters input[type=search]{flex:1;min-width:180px;font:inherit;font-size:14px;padding:6px 10px;border:1px solid var(--line);border-radius:8px;background:#fff;color:var(--text)}
+.pl-banner{background:#fff6e5;border:1px solid #f0d9a6;border-radius:8px;padding:10px 12px;margin:8px 0;font-size:13px;color:#6a4b00}
+.pl-deleted{font-size:13px;color:var(--muted);margin:8px 0 12px;display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+.pl-card{border:1px solid var(--line);border-radius:12px;padding:14px 16px;margin:0 0 12px;background:#fff}
+.pl-card.is-edited{border-left:4px solid #e0a100}
+.pl-card.is-new{border-left:4px solid var(--accent)}
+.pl-card-head{display:flex;flex-wrap:wrap;gap:8px;justify-content:space-between;align-items:flex-start;margin-bottom:8px}
+.pl-id{font-variant-numeric:tabular-nums;margin-right:6px}
+.pl-actions{display:flex;flex-wrap:wrap;gap:6px}
+.pl-text{font-size:15px;margin:6px 0 10px;white-space:pre-wrap}
+.pl-scores{display:flex;flex-wrap:wrap;gap:6px;margin:8px 0 4px}
+.score{display:inline-flex;align-items:center;font-size:12px;border:1px solid var(--line);border-radius:8px;padding:2px 8px;text-decoration:none;color:var(--text);background:#fff}
+.score.y{background:#e8f6ef;border-color:#b7e0cc;color:#146c45}
+.score.n{background:#f4f5f7;color:#5d6676}
+.score.na{background:repeating-linear-gradient(45deg,#f3f4f6,#f3f4f6 5px,#e7e9ed 5px,#e7e9ed 10px);color:#8a92a0}
+.badge{display:inline-block;font-size:11px;padding:1px 7px;border-radius:999px;background:#eef0f3;color:var(--muted);font-weight:600;margin:0 4px 2px 0;vertical-align:middle}
+.badge.edit{background:#fff3d6;color:#8a5a00}
+.badge.new{background:#e9f0ff;color:var(--accent)}
+.btn{border:1px solid var(--line);background:#fff;color:var(--text);padding:6px 12px;border-radius:8px;font:inherit;font-size:13px;cursor:pointer}
+.btn:hover{background:var(--accent-soft)}
+.btn.primary{background:var(--accent);color:#fff;border-color:var(--accent)}
+.btn.primary:hover{filter:brightness(1.05);background:var(--accent)}
+.btn.danger{color:#d64545;border-color:#f0c4c4}
+.btn.danger:hover{background:#fdecec}
+.btn.sm{padding:3px 8px;font-size:12px}
+.pl-more{margin-top:8px;font-size:14px}
+.pl-more summary{cursor:pointer;color:var(--accent);font-size:13px}
+.modal{position:fixed;inset:0;background:rgba(28,34,48,.45);z-index:50;display:flex;align-items:flex-start;justify-content:center;padding:32px 16px;overflow:auto}
+.modal[hidden]{display:none}
+.modal-card{background:#fff;border-radius:14px;border:1px solid var(--line);max-width:740px;width:100%;padding:20px 22px;margin:auto;box-shadow:0 12px 40px rgba(0,0,0,.18)}
+.f-row{margin:0 0 12px}
+.f-row label{display:block;font-size:13px;color:var(--muted);margin-bottom:4px}
+.f-row input[type=text],.f-row textarea,.f-row select{width:100%;font:inherit;font-size:14px;padding:6px 8px;border:1px solid var(--line);border-radius:8px;background:#fff;color:var(--text)}
+.f-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
+.fact-row,.flag-row{display:grid;grid-template-columns:1fr auto;gap:6px;align-items:start;margin:0 0 6px}
+.fact-fields{display:grid;gap:4px}
+code{font-size:12.5px;background:#eef0f3;padding:1px 5px;border-radius:4px}
+@media (max-width:800px){.f-grid{grid-template-columns:1fr 1fr}}
+@media (max-width:600px){.f-grid{grid-template-columns:1fr}}
+
 </style>
 </head>
 <body>
@@ -71,7 +119,7 @@ footer{text-align:center;color:var(--muted);font-size:13px;margin-top:28px}
 <h1>AI4GOOD GEO 调查报告</h1>
 <p class="summary">2026-11-22 未登录基线：六个平台、核心 20 条 prompt。数字均出自当日日志，对照 site-check.md。</p>
 <nav class="toc">
-<a href="#summary">结论摘要</a><a href="#baseline">各平台基线</a><a href="#method">测试方法</a><a href="#prompts">按意图与 prompt 的表现</a><a href="#errors">反复出现的错误事实</a><a href="#sources">引用来源分析</a><a href="#recs">优化建议</a><a href="#gaps">已知缺口</a><a href="#weekly">每周变化记录</a>
+<a href="#summary">结论摘要</a><a href="#baseline">各平台基线</a><a href="#method">测试方法</a><a href="#prompts">按意图与 prompt 的表现</a><a href="#prompt-lib">Prompt 库</a><a href="#errors">反复出现的错误事实</a><a href="#sources">引用来源分析</a><a href="#recs">优化建议</a><a href="#gaps">已知缺口</a><a href="#weekly">每周变化记录</a>
 </nav>
 
 <section id="summary">
@@ -119,6 +167,34 @@ footer{text-align:center;color:var(--muted);font-size:13px;margin-top:28px}
 <h3>明细表</h3>
 <div class="tbl"><table id="promptTbl"></table></div>
 <p>三条 C 组类目题六个平台均为未提到（Google 的 C-ZH-01 为无概览）。S-ZH-02 六个平台都提到了我们。P-ZH-03（三个模块）只有 ChatGPT 认成我们的产品。D-ZH-01 只有千问答对。</p>
+</section>
+
+
+<section id="prompt-lib">
+<div class="sec-head">
+<h2>Prompt 库</h2>
+<div class="controls pl-toolbar">
+<button type="button" class="btn primary" id="plAdd">新增 prompt</button>
+<button type="button" class="btn" id="plExport">导出 JSON</button>
+<button type="button" class="btn" id="plImportBtn">导入 JSON</button>
+<input type="file" id="plImport" accept="application/json,.json" hidden>
+<button type="button" class="btn" id="plReset">恢复为已发布版本</button>
+</div>
+</div>
+<p id="plMeta" class="caption"></p>
+<p id="plSource" class="caption"></p>
+<div class="callout" id="plHelp">在本页新增、修改、删除、调整顺序或打标签，修改只保存在你的浏览器里，不会自动写入仓库。把导出的 JSON 提交到本仓库的 <code>prompts.json</code>，替换已发布版本；每周复测使用最新的该文件。也可以直接在仓库里改 <code>prompts.json</code> 后提交。</div>
+<div id="plBanner"></div>
+<div class="controls pl-filters">
+<input type="search" id="plSearch" placeholder="搜索 ID、原文、标签…" aria-label="搜索 prompt">
+<label class="sel">语言 <select id="plLang"><option value="all">全部</option><option value="zh">中文</option><option value="en">英文</option></select></label>
+<label class="sel">意图 <select id="plIntent"><option value="all">全部</option></select></label>
+<label class="sel">分类 <select id="plCat"><option value="all">全部</option><option value="brand">品牌</option><option value="product">产品</option><option value="category">品类</option><option value="other">其他</option></select></label>
+<label class="sel">范围 <select id="plCore"><option value="all">全部</option><option value="core">核心</option><option value="noncore">非核心</option></select></label>
+<label class="sel">状态 <select id="plStatus"><option value="all">全部</option><option value="published">已发布</option><option value="edited">已编辑</option><option value="new">未发布</option></select></label>
+</div>
+<div id="plDeleted"></div>
+<div id="plList"></div>
 </section>
 
 <section id="errors">
@@ -188,6 +264,28 @@ footer{text-align:center;color:var(--muted);font-size:13px;margin-top:28px}
 
 <footer>数据截至 2026-11-22 基线，每周更新</footer>
 </div>
+
+<div id="plModal" class="modal" hidden>
+<div class="modal-card" role="dialog" aria-modal="true" aria-labelledby="plModalTitle">
+<div class="sec-head"><h3 id="plModalTitle">编辑 prompt</h3><button type="button" class="btn sm" id="plModalClose">关闭</button></div>
+<form id="plForm">
+<div class="f-grid">
+<div class="f-row"><label for="pfId">ID</label><input type="text" id="pfId" required placeholder="B-ZH-01" autocomplete="off"></div>
+<div class="f-row"><label for="pfLang">语言</label><select id="pfLang"><option value="zh">中文</option><option value="en">英文</option></select></div>
+<div class="f-row"><label for="pfIntent">意图</label><select id="pfIntent"></select></div>
+<div class="f-row"><label for="pfCat">分类</label><select id="pfCat"><option value="brand">品牌</option><option value="product">产品</option><option value="category">品类</option><option value="other">其他</option></select></div>
+</div>
+<div class="f-row"><label for="pfText">Prompt 原文</label><textarea id="pfText" rows="3" required></textarea></div>
+<div class="f-row"><label for="pfTags">标签（逗号分隔）</label><input type="text" id="pfTags" placeholder="例如：奢侈品, 陪练"></div>
+<div class="f-row"><label><input type="checkbox" id="pfCore"> 核心题（每周复测默认使用）</label></div>
+<div class="f-row"><label>预期事实</label><div id="pfFacts"></div><button type="button" class="btn sm" id="pfAddFact">添加事实</button></div>
+<div class="f-row"><label>红旗</label><div id="pfFlags"></div><button type="button" class="btn sm" id="pfAddFlag">添加红旗</button></div>
+<div class="f-row"><label for="pfNotes">备注</label><textarea id="pfNotes" rows="2"></textarea></div>
+<div class="pl-actions"><button type="submit" class="btn primary">保存</button><button type="button" class="btn" id="plModalCancel">取消</button></div>
+</form>
+</div>
+</div>
+
 <a class="totop" href="#top">↑ 回到顶部</a>
 
 <script>
@@ -309,18 +407,19 @@ function renderPrompts(){
  if(S.view==="intent"){
   var order=[];rows.forEach(function(r){if(order.indexOf(r.intent)<0)order.push(r.intent)});
   hmRows=order.map(function(k){var rs=rows.filter(function(r){return r.intent===k});
-   return{label:INTENTS[k]||k,sub:rs.length+" 条",vals:plats.map(function(p){
+   return{label:INTENTS[k]||k,sub:rs.length+" 条",id:"",vals:plats.map(function(p){
     var vs=rs.map(function(r){return cellVal(r.cells[p.key],m)}).filter(function(v){return!isNaN(v)});
     return{v:vs.length?vs.reduce(function(a,b){return a+b},0)/vs.length:NaN,t:vs.length?"":"未计分",agg:true}})}});
  }else{
-  hmRows=rows.map(function(r){return{label:r.id,sub:r.intent,vals:plats.map(function(p){var c=r.cells[p.key];
+  hmRows=rows.map(function(r){return{label:r.id,sub:r.intent,id:r.id,vals:plats.map(function(p){var c=r.cells[p.key];
    var v=cellVal(c,m);return{v:v,t:isNaN(v)?(c.note&&c.m==="NA"?c.note:"—"):"",note:c.note,agg:false}})}});
  }
  var hm=$("heatmap");
  hm.style.gridTemplateColumns="auto repeat("+plats.length+",minmax(58px,1fr))";
  var h='<div class="h"></div>'+plats.map(function(p){return'<div class="h">'+esc(p.label)+"</div>"}).join("");
  hmRows.forEach(function(r){
-  h+='<div class="r">'+esc(r.label)+(r.sub?"<small>"+esc(r.sub)+"</small>":"")+"</div>";
+  var lab=r.id?('<a class="hm-link" href="#pl-'+esc(r.id)+'">'+esc(r.label)+"</a>"):esc(r.label);
+  h+='<div class="r"'+(r.id?(' id="hm-'+esc(r.id)+'"'):"")+">"+lab+(r.sub?"<small>"+esc(r.sub)+"</small>":"")+"</div>";
   r.vals.forEach(function(c,i){
    var tip=r.label+" · "+plats[i].label;
    if(isNaN(c.v)){h+='<div class="cell na" title="'+esc(tip+"：未计分")+'">'+esc(c.t)+"</div>";return}
@@ -334,7 +433,7 @@ function renderPrompts(){
   '<span><span class="sw" style="background:'+PAL[m][1]+'"></span>Y</span><span><span class="sw" style="background:'+PAL[m][0]+';border:1px solid #dde1e7"></span>N</span>';
  $("legend").innerHTML=lg+'<span><span class="sw" style="background:repeating-linear-gradient(45deg,#f3f4f6,#f3f4f6 3px,#e1e4e9 3px,#e1e4e9 6px)"></span>未计分</span>'+(m==="confusion"?"<span>（混淆：颜色越红越差）</span>":"");
  var t="<thead><tr><th>prompt</th><th>意图</th>"+plats.map(function(p){return'<th class="c">'+esc(p.label)+"</th>"}).join("")+"</tr></thead><tbody>";
- rows.forEach(function(r){t+="<tr><td>"+r.id+"</td><td>"+r.intent+"</td>"+plats.map(function(p){return'<td class="c">'+esc(cellLabel(r.cells[p.key],m))+"</td>"}).join("")+"</tr>"});
+ rows.forEach(function(r){t+='<tr id="hm-tbl-'+r.id+'"><td><a class="hm-link" href="#pl-'+r.id+'">'+r.id+"</a></td><td>"+r.intent+"</td>"+plats.map(function(p){return'<td class="c">'+esc(cellLabel(r.cells[p.key],m))+"</td>"}).join("")+"</tr>"});
  $("promptTbl").innerHTML=t+"</tbody>";
 }
 function initSelects(){
@@ -376,7 +475,472 @@ function renderTrend(){
   return'<td class="num">'+esc(v)+"</td>"}).join("")+"<td>"+esc(p.note)+"</td></tr>"});
  $("trendTbl").innerHTML=t+"</tbody>";
 }
-initSelects();renderBase();renderPrompts();renderTrend();
+initSelects();renderBase();renderPrompts();renderTrend();initPromptLib();
+
+/* ============================ Prompt 库 ============================ */
+var LS_KEY="ai4good-geo-prompt-library-v1";
+var CAT_LABEL={brand:"品牌",product:"产品",category:"品类",other:"其他"};
+var LANG_LABEL={zh:"中文",en:"英文"};
+var PUBLISHED_PROMPTS={"suite_id": "ai4good-geo-prompt-suite-v1", "version": "1.1.0", "updated_at": "2026-11-24", "changelog": [{"date": "2026-11-22", "version": "1.0.0", "note": "v1 基线：从测试套件恢复 20 条核心 prompt。"}, {"date": "2026-11-24", "version": "1.1.0", "note": "拆出独立 prompts.json，供仪表盘 Prompt 库展示、编辑与每周复测使用。分类按 mention_target 映射为 brand / product / category / other。"}], "notes": ["Prompts are written as a natural buyer, HR/training manager, marketer or investor would type them. They do not include leading facts, and they do not name Louis Vuitton, Chanel or Fendi.", "Expected facts are limited to claims on the official site (see site-check.md). First-party metrics are flagged as unverified.", "Intent C and market-category L prompts must not include the company or product name in prompt_text.", "Do not run or back-fill scores in this file; testers log results in runs/*.jsonl."], "intents": [{"id": "B", "name_en": "Brand / company identity", "name_zh": "品牌与公司身份", "goal": "Does the model correctly identify AI4GOOD / 上海爱益谷 as this consulting-and-product company, not a namesake?"}, {"id": "F", "name_en": "Founders / leadership", "name_zh": "创始人与职务", "goal": "Are JK Shen (CEO) and Joseph Fan (CPO) identified with the right titles?"}, {"id": "P", "name_en": "Product understanding (KEATING.AI)", "name_zh": "产品理解（KEATING.AI）", "goal": "Does the model describe KEATING.AI as AI4GOOD’s talent/organization product with Smart Coach, Smart Cook and Smart Consultant, for sales (including luxury/premium retail) practice and knowledge?"}, {"id": "S", "name_en": "Services", "name_zh": "服务（GEO、企业转型、Innovation AImplifier、GaaS）", "goal": "Are GEO, Innovation AImplifier, enterprise transformation, and GOOD as a Service described as the official site describes them?"}, {"id": "D", "name_en": "Disambiguation", "name_zh": "同名辨析", "goal": "Can the model separate this company and KEATING.AI from ITU AI for Good, AI4Good Lab, keating.ai and keating.help?"}, {"id": "C", "name_en": "Non-branded category discovery", "name_zh": "非品牌类目发现", "goal": "When a buyer asks for tools in the category without naming AI4GOOD or KEATING.AI, does this company appear?"}, {"id": "X", "name_en": "Comparison / alternatives", "name_zh": "对比与替代", "goal": "When compared with other sales-training or enablement tools, is KEATING.AI described accurately (no invented differentiators)?"}, {"id": "T", "name_en": "Trust / proof", "name_zh": "信任与证据", "goal": "Does the model report clients, cases and public appearances only as the official site (and clearly marked first-party claims) support?"}, {"id": "A", "name_en": "Action / purchase", "name_zh": "行动与购买", "goal": "Can a buyer find a real next step (demo/form, founder emails) without invented pricing or contact details?"}, {"id": "L", "name_en": "Local / market", "name_zh": "地域与市场", "goal": "Does the model place the company in Shanghai / China, Singapore and North America / Canada, and can market-scoped category queries surface it?"}], "core_prompt_ids": ["B-ZH-01", "B-EN-01", "F-ZH-01", "F-EN-01", "P-ZH-01", "P-ZH-03", "P-EN-01", "S-ZH-02", "S-EN-01", "D-ZH-01", "D-EN-02", "C-ZH-01", "C-ZH-03", "C-EN-01", "X-EN-01", "T-ZH-01", "T-EN-01", "A-ZH-01", "A-EN-02", "L-EN-01"], "prompts": [{"id": "B-ZH-01", "language": "zh", "intent": "B", "category": "brand", "mention_target": "company", "core": true, "tags": [], "prompt_text": "上海爱益谷科技有限公司是做什么的？", "expected_facts": [{"fact": "上海爱益谷科技有限公司是 AI4GOOD 的法定名称。", "source_urls": ["https://ai-4good.ai/"]}, {"fact": "公司做 AI 咨询与产品，让人与 AI 协作、创造真实价值。", "source_urls": ["https://ai-4good.ai/"]}, {"fact": "产品与服务包括 KEATING.AI、GEO、Innovation AImplifier、企业转型。", "source_urls": ["https://ai-4good.ai/"]}], "red_flags": ["Treats this company as the ITU/UN AI for Good initiative (aiforgood.itu.int).", "Mixes this company with AI4Good Lab, ai4good.com, ai4good.org, or another same-name organisation.", "Describes current products only as 爱老师 / 爱课堂 / 爱伴老 (retired WordPress naming; not on the 22 Nov 2026 site).", "Gives the old 徐汇龙文路 street address or inquiry@ / hr@ as if they were published on the current site (they are not on the pages fetched 22 Nov 2026).", "Names Joseph Fan / 范宇轩 as CEO, or as the sole leader, omitting JK Shen / 沈佳齐 as Co-founder & CEO.", "Invented founders or titles not on the official site."]}, {"id": "B-EN-01", "language": "en", "intent": "B", "category": "brand", "mention_target": "company", "core": true, "tags": [], "prompt_text": "What is AI4GOOD?", "expected_facts": [{"fact": "AI4GOOD is an AI consulting and product company (legal name 上海爱益谷科技有限公司).", "source_urls": ["https://ai-4good.ai/company-en", "https://ai-4good.ai/"]}, {"fact": "It builds products and services that bring people and AI together to create real value.", "source_urls": ["https://ai-4good.ai/company-en"]}, {"fact": "Offerings include KEATING.AI, GEO, Innovation AImplifier, and enterprise transformation.", "source_urls": ["https://ai-4good.ai/company-en"]}, {"fact": "Teams collaborate across Shanghai, Singapore and North America.", "source_urls": ["https://ai-4good.ai/company-en"]}], "red_flags": ["Treats this company as the ITU/UN AI for Good initiative (aiforgood.itu.int).", "Mixes this company with AI4Good Lab, ai4good.com, ai4good.org, or another same-name organisation.", "Describes current products only as 爱老师 / 爱课堂 / 爱伴老 (retired WordPress naming; not on the 22 Nov 2026 site).", "Gives the old 徐汇龙文路 street address or inquiry@ / hr@ as if they were published on the current site (they are not on the pages fetched 22 Nov 2026)."]}, {"id": "F-ZH-01", "language": "zh", "intent": "F", "category": "brand", "mention_target": "company", "core": true, "tags": [], "prompt_text": "AI4GOOD的创始人是谁？谁是CEO？", "expected_facts": [{"fact": "沈佳齐 · JK Shen 是联合创始人兼 CEO。", "source_urls": ["https://ai-4good.ai/"]}, {"fact": "范宇轩 · Joseph Fan 是联合创始人兼 CPO，不是 CEO。", "source_urls": ["https://ai-4good.ai/"]}], "red_flags": ["Names Joseph Fan / 范宇轩 as CEO, or as the sole leader, omitting JK Shen / 沈佳齐 as Co-founder & CEO.", "Invented founders or titles not on the official site.", "Treats this company as the ITU/UN AI for Good initiative (aiforgood.itu.int).", "Mixes this company with AI4Good Lab, ai4good.com, ai4good.org, or another same-name organisation."]}, {"id": "F-EN-01", "language": "en", "intent": "F", "category": "brand", "mention_target": "company", "core": true, "tags": [], "prompt_text": "Who is the CEO of AI4GOOD?", "expected_facts": [{"fact": "JK Shen (沈佳齐) is Co-founder & CEO.", "source_urls": ["https://ai-4good.ai/company-en"]}, {"fact": "Joseph Fan is Co-founder & CPO, not CEO.", "source_urls": ["https://ai-4good.ai/company-en"]}], "red_flags": ["Names Joseph Fan / 范宇轩 as CEO, or as the sole leader, omitting JK Shen / 沈佳齐 as Co-founder & CEO.", "Invented founders or titles not on the official site.", "Treats this company as the ITU/UN AI for Good initiative (aiforgood.itu.int).", "Mixes this company with AI4Good Lab, ai4good.com, ai4good.org, or another same-name organisation."]}, {"id": "P-ZH-01", "language": "zh", "intent": "P", "category": "product", "mention_target": "product", "core": true, "tags": [], "prompt_text": "KEATING.AI是什么？", "expected_facts": [{"fact": "KEATING.AI 是 AI4GOOD 旗下产品，定位为人才与组织的价值创造引擎。", "source_urls": ["https://ai-4good.ai/keating", "https://ai-4good.ai/faq"]}, {"fact": "将智能陪练、知识创作与组织洞察连在一个产品中。", "source_urls": ["https://ai-4good.ai/keating"]}, {"fact": "三个方案：Smart Coach 智能教练、Smart Cook 智能内容大厨、Smart Consultant 智能顾问。", "source_urls": ["https://ai-4good.ai/keating", "https://ai-4good.ai/faq"]}, {"fact": "名字来自《死亡诗社》中的约翰·基廷老师，不是物理学家 Brian Keating 的网站。", "source_urls": ["https://ai-4good.ai/keating"]}], "red_flags": ["Identifies KEATING.AI as keating.ai (Brian Keating / UC San Diego personal site).", "Identifies KEATING.AI as keating.help or another unrelated Keating project.", "Explains the name only as a person named Keating, without the product by AI4GOOD, when the question is about the product.", "Describes current products only as 爱老师 / 爱课堂 / 爱伴老 (retired WordPress naming; not on the 22 Nov 2026 site).", "Gives the old 徐汇龙文路 street address or inquiry@ / hr@ as if they were published on the current site (they are not on the pages fetched 22 Nov 2026)."]}, {"id": "P-ZH-03", "language": "zh", "intent": "P", "category": "product", "mention_target": "product", "core": true, "tags": [], "prompt_text": "Smart Coach、Smart Cook和Smart Consultant分别是什么？", "expected_facts": [{"fact": "它们是 KEATING.AI（AI4GOOD 产品）的三个方案。", "source_urls": ["https://ai-4good.ai/keating", "https://ai-4good.ai/faq"]}, {"fact": "Smart Coach 智能教练：帮助销售人员更好地学习与销售（游戏化学习 + AI 客户角色扮演）。", "source_urls": ["https://ai-4good.ai/keating", "https://ai-4good.ai/faq"]}, {"fact": "Smart Cook 智能内容大厨：支持培训团队创作内容、梳理知识；含人工审核。", "source_urls": ["https://ai-4good.ai/keating", "https://ai-4good.ai/faq"]}, {"fact": "Smart Consultant 智能顾问：帮助组织看清练习表现、确定改进重点，并积累可复用知识资产。", "source_urls": ["https://ai-4good.ai/keating", "https://ai-4good.ai/faq"]}], "red_flags": ["Assigns the three names to a different vendor.", "Swaps the modules’ functions.", "Identifies KEATING.AI as keating.ai (Brian Keating / UC San Diego personal site).", "Identifies KEATING.AI as keating.help or another unrelated Keating project.", "Explains the name only as a person named Keating, without the product by AI4GOOD, when the question is about the product."]}, {"id": "P-EN-01", "language": "en", "intent": "P", "category": "product", "mention_target": "product", "core": true, "tags": [], "prompt_text": "What is KEATING.AI?", "expected_facts": [{"fact": "KEATING.AI is a product by AI4GOOD: a value-creation engine for talent and organization.", "source_urls": ["https://ai-4good.ai/keating-en", "https://ai-4good.ai/faq-en"]}, {"fact": "It connects AI coaching, knowledge creation and organizational insights in one product.", "source_urls": ["https://ai-4good.ai/keating-en"]}, {"fact": "Three solutions: Smart Coach, Smart Cook, Smart Consultant.", "source_urls": ["https://ai-4good.ai/keating-en"]}, {"fact": "The name is inspired by John Keating in Dead Poets Society, not the keating.ai physics site or keating.help.", "source_urls": ["https://ai-4good.ai/keating-en"]}], "red_flags": ["Identifies KEATING.AI as keating.ai (Brian Keating / UC San Diego personal site).", "Identifies KEATING.AI as keating.help or another unrelated Keating project.", "Explains the name only as a person named Keating, without the product by AI4GOOD, when the question is about the product.", "Describes current products only as 爱老师 / 爱课堂 / 爱伴老 (retired WordPress naming; not on the 22 Nov 2026 site).", "Gives the old 徐汇龙文路 street address or inquiry@ / hr@ as if they were published on the current site (they are not on the pages fetched 22 Nov 2026)."]}, {"id": "S-ZH-02", "language": "zh", "intent": "S", "category": "other", "mention_target": "service", "core": true, "tags": [], "prompt_text": "AI4GOOD的企业AI转型服务包括什么？", "expected_facts": [{"fact": "通过咨询与工作坊，从场景识别推进到技术落地。", "source_urls": ["https://ai-4good.ai/transformation", "https://ai-4good.ai/"]}, {"fact": "方法包括 AI4GOOD 4A 与 AI4GOOD GOOD；工作包含业务梳理、机会评估、路线图、用例设计、技术实施与变革管理。", "source_urls": ["https://ai-4good.ai/transformation"]}, {"fact": "官网还提供 AI 工作坊系列，并提到可在 1–3 个月共创速赢 Demo。", "source_urls": ["https://ai-4good.ai/transformation"]}], "red_flags": ["Describes current products only as 爱老师 / 爱课堂 / 爱伴老 (retired WordPress naming; not on the 22 Nov 2026 site).", "Gives the old 徐汇龙文路 street address or inquiry@ / hr@ as if they were published on the current site (they are not on the pages fetched 22 Nov 2026).", "Collapses all of AI4GOOD into only KEATING.AI and ignores consulting / workshops.", "Invented delivery SLAs not on the site."]}, {"id": "S-EN-01", "language": "en", "intent": "S", "category": "other", "mention_target": "service", "core": true, "tags": [], "prompt_text": "What is AI4GOOD's GEO service?", "expected_facts": [{"fact": "Elevated brand engagement for human and AI, starting with generative engine optimization: be found, understood, trusted and recommended.", "source_urls": ["https://ai-4good.ai/geo-en", "https://ai-4good.ai/faq-en"]}, {"fact": "Three solutions: Navigator, Creator, Connector.", "source_urls": ["https://ai-4good.ai/geo-en", "https://ai-4good.ai/faq-en"]}, {"fact": "Covers global and Chinese AI ecosystems, including ChatGPT, Perplexity, Gemini, Doubao, Qwen and Yuanbao.", "source_urls": ["https://ai-4good.ai/faq-en"]}, {"fact": "AI4GOOD does not guarantee fixed rankings.", "source_urls": ["https://ai-4good.ai/faq-en", "https://ai-4good.ai/geo-en"]}], "red_flags": ["Claims AI4GOOD guarantees fixed AI rankings (the FAQ says it does not).", "Treats this company as the ITU/UN AI for Good initiative (aiforgood.itu.int).", "Mixes this company with AI4Good Lab, ai4good.com, ai4good.org, or another same-name organisation.", "Describes it only as classic SEO."]}, {"id": "D-ZH-01", "language": "zh", "intent": "D", "category": "brand", "mention_target": "company", "core": true, "tags": [], "prompt_text": "AI4GOOD和联合国的AI for Good是同一家吗？", "expected_facts": [{"fact": "不是同一家。上海爱益谷科技有限公司（品牌 AI4GOOD，网站 ai-4good.ai）是商业性的 AI 咨询与产品公司。", "source_urls": ["https://ai-4good.ai/"]}, {"fact": "联合国 / ITU 的 AI for Good 是另一项倡议，不能混为同一主体。", "source_urls": ["https://ai-4good.ai/"]}], "red_flags": ["Treats this company as the ITU/UN AI for Good initiative (aiforgood.itu.int).", "Mixes this company with AI4Good Lab, ai4good.com, ai4good.org, or another same-name organisation.", "Answers that they are the same organisation or that the Shanghai company runs the UN programme."]}, {"id": "D-EN-02", "language": "en", "intent": "D", "category": "product", "mention_target": "product", "core": true, "tags": [], "prompt_text": "Is KEATING.AI the same as keating.ai or keating.help?", "expected_facts": [{"fact": "No. KEATING.AI is AI4GOOD’s product, documented at ai-4good.ai/keating-en, named after John Keating in Dead Poets Society.", "source_urls": ["https://ai-4good.ai/keating-en"]}, {"fact": "keating.ai and keating.help are different sites/projects, not the official product site.", "source_urls": ["https://ai-4good.ai/keating-en"]}], "red_flags": ["Identifies KEATING.AI as keating.ai (Brian Keating / UC San Diego personal site).", "Identifies KEATING.AI as keating.help or another unrelated Keating project.", "Explains the name only as a person named Keating, without the product by AI4GOOD, when the question is about the product.", "Treats any of the three as the same product or official homepage."]}, {"id": "C-ZH-01", "language": "zh", "intent": "C", "category": "category", "mention_target": "category", "core": true, "tags": [], "prompt_text": "奢侈品或高端零售有哪些AI导购陪练或销售角色扮演工具？", "expected_facts": [{"fact": "若被提及：KEATING.AI 是 AI4GOOD 面向销售一线的智能陪练与角色扮演等产品，客户故事包含奢侈品 / 高端零售场景。", "source_urls": ["https://ai-4good.ai/keating", "https://ai-4good.ai/case-scale", "https://ai-4good.ai/case-focus"]}], "red_flags": ["If the company is mentioned, any namesake mix-up or invented product description still counts as a red flag.", "Do not mark competitor mentions as hallucinations; they are expected in category answers."]}, {"id": "C-ZH-03", "language": "zh", "intent": "C", "category": "category", "mention_target": "category", "core": true, "tags": [], "prompt_text": "中国有哪些做生成式引擎优化或GEO的公司？", "expected_facts": [{"fact": "若被提及：AI4GOOD 提供 GEO 服务（Navigator / Creator / Connector），面向全球与中国 AI 生态。", "source_urls": ["https://ai-4good.ai/geo", "https://ai-4good.ai/faq"]}], "red_flags": ["If the company is mentioned, any namesake mix-up or invented product description still counts as a red flag.", "Do not mark competitor mentions as hallucinations; they are expected in category answers.", "Claims AI4GOOD guarantees fixed AI rankings (the FAQ says it does not)."]}, {"id": "C-EN-01", "language": "en", "intent": "C", "category": "category", "mention_target": "category", "core": true, "tags": [], "prompt_text": "What AI tools help luxury or premium retail sales associates practice client conversations?", "expected_facts": [{"fact": "If mentioned: KEATING.AI by AI4GOOD offers AI customer role-play and gamified practice for sales associates; official case stories include luxury and high-end retail.", "source_urls": ["https://ai-4good.ai/keating-en", "https://ai-4good.ai/case-scale-en", "https://ai-4good.ai/case-focus-en"]}], "red_flags": ["If the company is mentioned, any namesake mix-up or invented product description still counts as a red flag.", "Do not mark competitor mentions as hallucinations; they are expected in category answers."]}, {"id": "X-EN-01", "language": "en", "intent": "X", "category": "product", "mention_target": "product", "core": true, "tags": [], "prompt_text": "How does KEATING.AI compare with Attensi or Yoobic?", "expected_facts": [{"fact": "KEATING.AI (AI4GOOD) connects AI coaching, knowledge creation and organizational insights for sales teams; official cases include luxury / high-end retail.", "source_urls": ["https://ai-4good.ai/keating-en", "https://ai-4good.ai/case-scale-en"]}, {"fact": "The official site does not publish a comparison with Attensi or Yoobic; answers should not invent a competitor feature matrix or shared clients.", "source_urls": ["https://ai-4good.ai/keating-en"]}], "red_flags": ["Identifies KEATING.AI as keating.ai (Brian Keating / UC San Diego personal site).", "Identifies KEATING.AI as keating.help or another unrelated Keating project.", "Explains the name only as a person named Keating, without the product by AI4GOOD, when the question is about the product.", "Invented named clients that do not appear on the official site.", "Treats Louis Vuitton / LV as an official-site-confirmed client (LV is not on the 22 Nov 2026 live pages).", "Treats the Kering China Innovation Day appearance as a signed Kering client contract.", "Presents first-party case metrics as independently audited guarantees.", "Invented official competitive claims or prices."]}, {"id": "T-ZH-01", "language": "zh", "intent": "T", "category": "brand", "mention_target": "company", "core": true, "tags": [], "prompt_text": "AI4GOOD有哪些客户或合作案例？", "expected_facts": [{"fact": "客户故事里的品牌均未点名：奢侈品零售规模化培训、高端零售单产品问题、消费电子 GEO、高端消费品 GEO、美国金融机构 GEO、移动支付与科技 3C 创新案例。", "source_urls": ["https://ai-4good.ai/cases", "https://ai-4good.ai/case-scale", "https://ai-4good.ai/case-focus"]}, {"fact": "官网“客户伙伴”标识的 logo alt 包括 Chanel、Fendi、支付宝、华为、火山引擎、雀巢、李锦记、Publicis Groupe、腾讯研究院 S-Tech 工作室。", "source_urls": ["https://ai-4good.ai/", "https://ai-4good.ai/keating"]}, {"fact": "新闻页写明 2026 年在 Kering China Innovation Day 展示了 KEATING.AI，这是活动出场，不等同于已公布的签约客户关系。", "source_urls": ["https://ai-4good.ai/news"]}], "red_flags": ["Invented named clients that do not appear on the official site.", "Treats Louis Vuitton / LV as an official-site-confirmed client (LV is not on the 22 Nov 2026 live pages).", "Treats the Kering China Innovation Day appearance as a signed Kering client contract.", "Presents first-party case metrics as independently audited guarantees."]}, {"id": "T-EN-01", "language": "en", "intent": "T", "category": "product", "mention_target": "product", "core": true, "tags": [], "prompt_text": "What proof or case studies does KEATING.AI have?", "expected_facts": [{"fact": "Two unnamed official stories: luxury retail at scale (2× course completion, 30–50% faster production, 30–40% cost reduction) and a high-end retail product brief (30+ associates, +19 average score, 25+ golden lines). First-party claims.", "source_urls": ["https://ai-4good.ai/case-scale-en", "https://ai-4good.ai/case-focus-en", "https://ai-4good.ai/cases-en"]}, {"fact": "FAQ: results in client stories reflect their own contexts and should not be treated as guarantees for other projects.", "source_urls": ["https://ai-4good.ai/faq-en"]}], "red_flags": ["Invented named clients that do not appear on the official site.", "Treats Louis Vuitton / LV as an official-site-confirmed client (LV is not on the 22 Nov 2026 live pages).", "Treats the Kering China Innovation Day appearance as a signed Kering client contract.", "Presents first-party case metrics as independently audited guarantees."]}, {"id": "A-ZH-01", "language": "zh", "intent": "A", "category": "brand", "mention_target": "company", "core": true, "tags": [], "prompt_text": "怎么联系AI4GOOD或预约KEATING.AI的Demo？", "expected_facts": [{"fact": "通过官网预约 Demo / 联系表单，说明团队和希望解决的业务问题。", "source_urls": ["https://ai-4good.ai/keating", "https://ai-4good.ai/faq", "https://ai-4good.ai/"]}, {"fact": "官网公开的邮箱是联合创始人 jk.shen@ai-4good.ai 与 joseph.fan@ai-4good.ai（出现在首页）。", "source_urls": ["https://ai-4good.ai/"]}, {"fact": "当前抓取的页面没有公开总机电话或公司街道地址，也没有 /contact 页面。", "source_urls": ["https://ai-4good.ai/"]}], "red_flags": ["Invented price list, packages, or a free-trial offer not published on the official site.", "Describes current products only as 爱老师 / 爱课堂 / 爱伴老 (retired WordPress naming; not on the 22 Nov 2026 site).", "Gives the old 徐汇龙文路 street address or inquiry@ / hr@ as if they were published on the current site (they are not on the pages fetched 22 Nov 2026).", "Invented phone numbers or a street address.", "Invented a general inbox not on the current site."]}, {"id": "A-EN-02", "language": "en", "intent": "A", "category": "product", "mention_target": "product", "core": true, "tags": [], "prompt_text": "How much does KEATING.AI cost?", "expected_facts": [{"fact": "No public price list or packages on the official site. The contact form includes a budget-range field. Pricing is through enquiry / demo.", "source_urls": ["https://ai-4good.ai/keating-en", "https://ai-4good.ai/faq-en"]}], "red_flags": ["Invented price list, packages, or a free-trial offer not published on the official site."]}, {"id": "L-EN-01", "language": "en", "intent": "L", "category": "brand", "mention_target": "company", "core": true, "tags": [], "prompt_text": "Where is AI4GOOD based, and which markets does it work in?", "expected_facts": [{"fact": "Legal entity is in China (上海爱益谷科技有限公司). Copy says teams collaborate across Shanghai, Singapore and North America; map labels Canada, China and Singapore.", "source_urls": ["https://ai-4good.ai/company-en", "https://ai-4good.ai/"]}], "red_flags": ["Invented offices or a US headquarters not stated on the site.", "Treats this company as the ITU/UN AI for Good initiative (aiforgood.itu.int).", "Mixes this company with AI4Good Lab, ai4good.com, ai4good.org, or another same-name organisation."]}]};
+var publishedSet=null, workingSet=null;
+var plFilter={q:"",lang:"all",intent:"all",cat:"all",status:"all",core:"all"};
+var plEditingId=null;
+
+function deepClone(o){return JSON.parse(JSON.stringify(o))}
+function todayYMD(){
+  var d=new Date();
+  return d.getFullYear()+"-"+("0"+(d.getMonth()+1)).slice(-2)+"-"+("0"+d.getDate()).slice(-2);
+}
+function normalizePrompt(p){
+  p=p&&typeof p==="object"?deepClone(p):{};
+  var cat=p.category;
+  if(!cat){
+    var mt=p.mention_target;
+    cat=mt==="company"?"brand":mt==="product"?"product":mt==="category"?"category":"other";
+  }
+  if(["brand","product","category","other"].indexOf(cat)<0)cat="other";
+  return{
+    id:String(p.id||"").trim(),
+    language:p.language||"",
+    intent:p.intent||"",
+    category:cat,
+    mention_target:p.mention_target||"",
+    core:!!p.core,
+    tags:Array.isArray(p.tags)?p.tags.map(function(t){return String(t).trim()}).filter(Boolean):[],
+    prompt_text:p.prompt_text||"",
+    expected_facts:Array.isArray(p.expected_facts)?p.expected_facts.map(function(f){
+      if(typeof f==="string")return{fact:f,source_urls:[]};
+      return{fact:f&&f.fact||"",source_urls:Array.isArray(f.source_urls)?f.source_urls.slice():[]};
+    }):[],
+    red_flags:Array.isArray(p.red_flags)?p.red_flags.map(function(s){return String(s)}):[],
+    notes:p.notes||""
+  };
+}
+function normalizeSet(data){
+  data=data&&typeof data==="object"?deepClone(data):{};
+  if(!Array.isArray(data.prompts))data.prompts=[];
+  if(!Array.isArray(data.changelog))data.changelog=[];
+  if(!Array.isArray(data.intents))data.intents=[];
+  if(!Array.isArray(data.notes))data.notes=[];
+  data.version=data.version||"";
+  data.updated_at=data.updated_at||"";
+  data.suite_id=data.suite_id||"ai4good-geo-prompt-suite-v1";
+  data.prompts=data.prompts.map(normalizePrompt);
+  data.core_prompt_ids=data.prompts.filter(function(p){return p.core}).map(function(p){return p.id});
+  return data;
+}
+function canonPrompt(p){
+  p=normalizePrompt(p);
+  return JSON.stringify({
+    id:p.id,language:p.language,intent:p.intent,category:p.category,
+    mention_target:p.mention_target,core:p.core,tags:p.tags.slice(),
+    prompt_text:p.prompt_text,expected_facts:p.expected_facts,red_flags:p.red_flags,notes:p.notes
+  });
+}
+function publishedById(){
+  var m={};(publishedSet.prompts||[]).forEach(function(p){m[p.id]=p});return m;
+}
+function promptStatus(p){
+  var pub=publishedById()[p.id];
+  if(!pub)return"new";
+  return canonPrompt(pub)===canonPrompt(p)?"published":"edited";
+}
+function isDirty(){
+  if(!publishedSet||!workingSet)return false;
+  if(workingSet.prompts.length!==publishedSet.prompts.length)return true;
+  for(var i=0;i<workingSet.prompts.length;i++){
+    if(canonPrompt(workingSet.prompts[i])!==canonPrompt(publishedSet.prompts[i]))return true;
+  }
+  return false;
+}
+function deletedPublished(){
+  var have={};workingSet.prompts.forEach(function(p){have[p.id]=1});
+  return publishedSet.prompts.filter(function(p){return !have[p.id]});
+}
+function saveLocal(){
+  try{localStorage.setItem(LS_KEY,JSON.stringify({saved_at:new Date().toISOString(),set:workingSet}))}catch(e){}
+}
+function loadLocal(){
+  try{
+    var raw=localStorage.getItem(LS_KEY);
+    if(!raw)return null;
+    var o=JSON.parse(raw);
+    if(!o||!o.set||!Array.isArray(o.set.prompts))return null;
+    return normalizeSet(o.set);
+  }catch(e){return null}
+}
+function clearLocal(){try{localStorage.removeItem(LS_KEY)}catch(e){}}
+function findPrompt(id){
+  for(var i=0;i<workingSet.prompts.length;i++)if(workingSet.prompts[i].id===id)return{p:workingSet.prompts[i],i:i};
+  return null;
+}
+function latestRow(pid){
+  var P=PERIODS[PERIODS.length-1];
+  if(!P||!P.prompts)return null;
+  for(var i=0;i<P.prompts.length;i++)if(P.prompts[i][0]===pid)return P.prompts[i];
+  return null;
+}
+function latestScores(pid){
+  var row=latestRow(pid),P=PERIODS[PERIODS.length-1];
+  if(!row)return null;
+  return PLATFORMS.map(function(pl){
+    var raw=row[2][pl.key];
+    var note=(P.naNotes||{})[pl.key+"|"+pid];
+    return{pl:pl,raw:raw,cell:parse(raw,note),tested:raw!=null&&raw!==""};
+  });
+}
+function intentName(k){return INTENTS[k]||k}
+function intentGoal(k){
+  var list=(workingSet&&workingSet.intents)||(publishedSet&&publishedSet.intents)||[];
+  for(var i=0;i<list.length;i++)if(list[i].id===k)return list[i].goal||"";
+  return "";
+}
+function flash(el){
+  if(!el)return;
+  el.classList.remove("flash");void el.offsetWidth;el.classList.add("flash");
+  setTimeout(function(){el.classList.remove("flash")},1800);
+}
+function jumpToHeatmap(pid){
+  S.view="prompt";
+  renderPrompts();
+  var el=$("hm-"+pid);
+  if(el){
+    el.scrollIntoView({behavior:"smooth",block:"center"});
+    flash(el);
+    var node=el.nextElementSibling,n=0;
+    while(node&&n<24&&node.classList.contains("cell")){flash(node);node=node.nextElementSibling;n++}
+  }else{
+    var sec=$("prompts");if(sec)sec.scrollIntoView({behavior:"smooth"});
+  }
+}
+function plVisible(p){
+  var f=plFilter,st=promptStatus(p);
+  if(f.lang!=="all"&&p.language!==f.lang)return false;
+  if(f.intent!=="all"&&p.intent!==f.intent)return false;
+  if(f.cat!=="all"&&p.category!==f.cat)return false;
+  if(f.core==="core"&&!p.core)return false;
+  if(f.core==="noncore"&&p.core)return false;
+  if(f.status==="edited"&&st!=="edited")return false;
+  if(f.status==="new"&&st!=="new")return false;
+  if(f.status==="published"&&st!=="published")return false;
+  if(f.q){
+    var q=f.q.toLowerCase();
+    var hay=[p.id,p.prompt_text,p.language,p.intent,intentName(p.intent),CAT_LABEL[p.category]||p.category,(p.tags||[]).join(" "),(p.red_flags||[]).join(" "),p.notes].join(" ").toLowerCase();
+    (p.expected_facts||[]).forEach(function(x){hay+=" "+(x.fact||"").toLowerCase()});
+    if(hay.indexOf(q)<0)return false;
+  }
+  return true;
+}
+function statusBadge(st){
+  if(st==="edited")return '<span class="badge edit">已编辑</span>';
+  if(st==="new")return '<span class="badge new">未发布</span>';
+  return "";
+}
+function fillPlFilters(){
+  var sel=$("plIntent");
+  if(!sel)return;
+  var cur=sel.value||"all";
+  var keys=[],seen={};
+  Object.keys(INTENTS).forEach(function(k){seen[k]=1;keys.push(k)});
+  function addFrom(set){
+    if(!set)return;
+    (set.intents||[]).forEach(function(i){if(i.id&&!seen[i.id]){seen[i.id]=1;keys.push(i.id)}});
+    (set.prompts||[]).forEach(function(p){if(p.intent&&!seen[p.intent]){seen[p.intent]=1;keys.push(p.intent)}});
+  }
+  addFrom(publishedSet);addFrom(workingSet);
+  sel.innerHTML='<option value="all">全部</option>'+keys.map(function(k){return '<option value="'+esc(k)+'">'+esc(intentName(k))+"</option>"}).join("");
+  sel.value=(cur==="all"||seen[cur])?cur:"all";
+}
+function renderLib(){
+  if(!workingSet)return;
+  fillPlFilters();
+  var dirty=isDirty();
+  var del=deletedPublished();
+  var vis=workingSet.prompts.filter(plVisible);
+  $("plMeta").textContent="已发布版本 "+(publishedSet.version||"—")+" · 更新日期 "+(publishedSet.updated_at||"—")+" · 共 "+workingSet.prompts.length+" 条，当前显示 "+vis.length+" 条";
+  $("plBanner").innerHTML=dirty?'<div class="pl-banner">本机有尚未写入仓库的修改。导出 JSON 并提交替换仓库里的 <code>prompts.json</code> 后，才会成为已发布版本。</div>':"";
+  if(del.length){
+    $("plDeleted").innerHTML='<div class="pl-deleted">本地已删除 '+del.length+" 条已发布 prompt："+del.map(function(p){
+      return '<span>'+esc(p.id)+' <button type="button" class="btn sm" data-restore="'+esc(p.id)+'">恢复</button></span>';
+    }).join(" ")+"</div>";
+  }else $("plDeleted").innerHTML="";
+  $("plList").innerHTML=vis.map(renderCard).join("")||'<p class="caption">没有符合筛选条件的 prompt。</p>';
+}
+function renderCard(p){
+  var st=promptStatus(p);
+  var scores=latestScores(p.id);
+  var chips;
+  if(scores){
+    chips='<div class="pl-scores">'+scores.map(function(s){
+      var lab,cls="na";
+      if(!s.tested||s.cell.m==="NA"){lab=s.cell.note||"未计分";}
+      else{
+        cls=s.cell.m==="Y"?"y":"n";
+        lab=s.cell.m+(s.cell.a!=null?" · "+s.cell.a:"");
+        if(s.cell.note==="拒答")lab+=" · 拒答";
+      }
+      return '<a class="score '+cls+'" href="#hm-'+esc(p.id)+'" data-jump="'+esc(p.id)+'" title="'+esc(s.pl.label+"："+lab)+'">'+esc(s.pl.label)+" "+esc(lab)+"</a>";
+    }).join("")+' <a class="score" href="#hm-'+esc(p.id)+'" data-jump="'+esc(p.id)+'">看热力图行</a></div>';
+  }else{
+    chips='<p class="caption">尚未出现在本期热力图。把这条标为核心并发布后，纳入复测才会有平台得分。</p>';
+  }
+  var tags=(p.tags||[]).map(function(t){return '<span class="badge">'+esc(t)+"</span>"}).join("");
+  var facts="";
+  if((p.expected_facts||[]).length||(p.red_flags||[]).length||p.notes){
+    facts='<details class="pl-more"><summary>预期事实、红旗与备注</summary>';
+    if(p.expected_facts.length){
+      facts+="<ul>"+p.expected_facts.map(function(f){
+        var src=(f.source_urls||[]).map(function(u){return '<a href="'+esc(u)+'" target="_blank" rel="noopener">'+esc(u)+"</a>"}).join("、");
+        return "<li>"+esc(f.fact)+(src?"<br><span class=\"caption\">"+src+"</span>":"")+"</li>";
+      }).join("")+"</ul>";
+    }
+    if(p.red_flags.length)facts+='<p class="caption">红旗</p><ul>'+p.red_flags.map(function(x){return "<li>"+esc(x)+"</li>"}).join("")+"</ul>";
+    if(p.notes)facts+="<p>"+esc(p.notes)+"</p>";
+    facts+="</details>";
+  }
+  return '<article class="pl-card'+(st!=="published"?" is-"+st:"")+'" id="pl-'+esc(p.id)+'" data-id="'+esc(p.id)+'">'+
+    '<div class="pl-card-head"><div><strong class="pl-id">'+esc(p.id)+"</strong> "+statusBadge(st)+
+      '<span class="badge">'+esc(intentName(p.intent))+"</span>"+
+      '<span class="badge">'+esc(LANG_LABEL[p.language]||p.language||"—")+"</span>"+
+      '<span class="badge">'+esc(CAT_LABEL[p.category]||p.category)+"</span>"+
+      (p.core?'<span class="badge">核心</span>':"")+tags+
+    '</div><div class="pl-actions">'+
+      '<button type="button" class="btn sm" data-move="up" data-id="'+esc(p.id)+'">上移</button>'+
+      '<button type="button" class="btn sm" data-move="down" data-id="'+esc(p.id)+'">下移</button>'+
+      '<button type="button" class="btn sm" data-edit="'+esc(p.id)+'">编辑</button>'+
+      '<button type="button" class="btn sm danger" data-del="'+esc(p.id)+'">删除</button>'+
+    "</div></div>"+
+    (intentGoal(p.intent)?'<p class="caption">意图：'+esc(intentGoal(p.intent))+"</p>":"")+
+    '<p class="pl-text">'+esc(p.prompt_text)+"</p>"+
+    chips+facts+
+  "</article>";
+}
+
+function mentionFromCat(cat,prev){
+  if(cat==="brand")return"company";
+  if(cat==="product")return"product";
+  if(cat==="category")return"category";
+  return prev&&["company","product","category"].indexOf(prev)<0?prev:"service";
+}
+function suggestId(intent,lang){
+  intent=(intent||"X").toUpperCase();
+  lang=(lang||"ZH").toUpperCase();
+  var n=1,used={};
+  function mark(set){if(!set)return;(set.prompts||[]).forEach(function(p){used[p.id]=1})}
+  mark(workingSet);mark(publishedSet);
+  while(used[intent+"-"+lang+"-"+("0"+n).slice(-2)])n++;
+  return intent+"-"+lang+"-"+("0"+n).slice(-2);
+}
+function factRowHtml(f){
+  f=f||{fact:"",source_urls:[]};
+  return '<div class="fact-row"><div class="fact-fields">'+
+    '<input type="text" class="pf-fact" placeholder="预期事实" value="'+esc(f.fact)+'">'+
+    '<input type="text" class="pf-srcs" placeholder="来源 URL，逗号分隔" value="'+esc((f.source_urls||[]).join(", "))+'">'+
+    '</div><button type="button" class="btn sm" data-rm-fact>删除</button></div>';
+}
+function flagRowHtml(s){
+  return '<div class="flag-row"><input type="text" class="pf-flag" placeholder="红旗（不应出现的错误）" value="'+esc(s||"")+'"><button type="button" class="btn sm" data-rm-flag>删除</button></div>';
+}
+function fillIntentSelect(sel,val){
+  var keys=[],seen={};
+  Object.keys(INTENTS).forEach(function(k){seen[k]=1;keys.push(k)});
+  function addFrom(set){
+    if(!set)return;
+    (set.intents||[]).forEach(function(i){if(i.id&&!seen[i.id]){seen[i.id]=1;keys.push(i.id)}});
+  }
+  addFrom(publishedSet);addFrom(workingSet);
+  if(val&&!seen[val])keys.push(val);
+  sel.innerHTML=keys.map(function(k){return '<option value="'+esc(k)+'">'+esc(intentName(k))+"</option>"}).join("");
+  sel.value=val||keys[0]||"";
+}
+function openModal(p){
+  plEditingId=p?p.id:null;
+  $("plModalTitle").textContent=p?"编辑 "+p.id:"新增 prompt";
+  $("pfId").value=p?p.id:suggestId("B","ZH");
+  $("pfLang").value=p&&p.language==="en"?"en":"zh";
+  fillIntentSelect($("pfIntent"),p?p.intent:"B");
+  $("pfCat").value=p&&CAT_LABEL[p.category]?p.category:"brand";
+  $("pfText").value=p?p.prompt_text:"";
+  $("pfTags").value=p&&p.tags?p.tags.join(", "):"";
+  $("pfCore").checked=p?!!p.core:true;
+  $("pfNotes").value=p&&p.notes?p.notes:"";
+  $("pfFacts").innerHTML=((p&&p.expected_facts)||[{fact:"",source_urls:[]}]).map(factRowHtml).join("");
+  $("pfFlags").innerHTML=((p&&p.red_flags&&p.red_flags.length)?p.red_flags:[""]).map(flagRowHtml).join("");
+  $("plModal").hidden=false;
+  $("pfText").focus();
+}
+function closeModal(){$("plModal").hidden=true;plEditingId=null}
+function collectForm(){
+  var tags=$("pfTags").value.split(/[,，]/).map(function(t){return t.trim()}).filter(Boolean);
+  var facts=[];
+  Array.prototype.forEach.call($("pfFacts").querySelectorAll(".fact-row"),function(row){
+    var fact=row.querySelector(".pf-fact").value.trim();
+    var srcs=row.querySelector(".pf-srcs").value.split(/[,，\s]+/).map(function(s){return s.trim()}).filter(Boolean);
+    if(fact||srcs.length)facts.push({fact:fact,source_urls:srcs});
+  });
+  var flags=[];
+  Array.prototype.forEach.call($("pfFlags").querySelectorAll(".pf-flag"),function(inp){
+    var v=inp.value.trim();if(v)flags.push(v);
+  });
+  var cat=$("pfCat").value;
+  var existing=plEditingId?findPrompt(plEditingId):null;
+  return normalizePrompt({
+    id:$("pfId").value.trim(),
+    language:$("pfLang").value,
+    intent:$("pfIntent").value,
+    category:cat,
+    mention_target:mentionFromCat(cat,existing?existing.p.mention_target:""),
+    core:$("pfCore").checked,
+    tags:tags,
+    prompt_text:$("pfText").value.trim(),
+    expected_facts:facts,
+    red_flags:flags,
+    notes:$("pfNotes").value.trim()
+  });
+}
+function saveForm(){
+  var p=collectForm();
+  if(!p.id){alert("请填写 ID。");return false}
+  if(!p.prompt_text){alert("请填写 prompt 原文。");return false}
+  var clash=findPrompt(p.id);
+  if(clash&&clash.p.id!==plEditingId){alert("ID「"+p.id+"」已存在。");return false}
+  if(plEditingId){
+    var found=findPrompt(plEditingId);
+    if(found)workingSet.prompts[found.i]=p;
+    else workingSet.prompts.push(p);
+  }else workingSet.prompts.push(p);
+  saveLocal();
+  closeModal();
+  renderLib();
+  var el=$("pl-"+p.id);if(el){el.scrollIntoView({block:"center"});flash(el)}
+  return true;
+}
+
+function exportJSON(){
+  var out=deepClone(workingSet);
+  if(isDirty()){
+    var note=window.prompt("导出说明（写入 changelog，可留空取消不写）：","从仪表盘导出的本地修订。");
+    if(note===null)return;
+    out.updated_at=todayYMD();
+    if(note.trim())out.changelog=(out.changelog||[]).concat([{date:out.updated_at,version:out.version,note:note.trim()}]);
+  }
+  out.core_prompt_ids=out.prompts.filter(function(p){return p.core}).map(function(p){return p.id});
+  var blob=new Blob([JSON.stringify(out,null,2)+"\n"],{type:"application/json"});
+  var a=document.createElement("a");
+  a.href=URL.createObjectURL(blob);
+  a.download="prompts.json";
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+  setTimeout(function(){URL.revokeObjectURL(a.href)},1500);
+}
+function importJSON(file){
+  var reader=new FileReader();
+  reader.onload=function(){
+    try{
+      var data=normalizeSet(JSON.parse(reader.result));
+      if(!data.prompts.length&&!confirm("这个文件没有 prompt。仍要导入吗？"))return;
+      if(!confirm("导入将覆盖本机当前题库（可用「恢复为已发布版本」撤回）。继续？"))return;
+      workingSet=data;
+      saveLocal();
+      renderLib();
+    }catch(e){alert("无法解析 JSON："+(e.message||e))}
+  };
+  reader.readAsText(file);
+}
+function resetPublished(){
+  if(!confirm("恢复为已发布版本？本机未导出的修改会丢失。"))return;
+  workingSet=deepClone(publishedSet);
+  clearLocal();
+  renderLib();
+}
+function movePrompt(id,dir){
+  var found=findPrompt(id);if(!found)return;
+  var j=dir==="up"?found.i-1:found.i+1;
+  if(j<0||j>=workingSet.prompts.length)return;
+  var t=workingSet.prompts[found.i];
+  workingSet.prompts[found.i]=workingSet.prompts[j];
+  workingSet.prompts[j]=t;
+  saveLocal();renderLib();
+  var el=$("pl-"+id);if(el)flash(el);
+}
+function deletePrompt(id){
+  if(!confirm("删除 "+id+"？已发布的条目在提交前仍可从上方恢复。"))return;
+  workingSet.prompts=workingSet.prompts.filter(function(p){return p.id!==id});
+  saveLocal();renderLib();
+}
+function restorePrompt(id){
+  if(findPrompt(id))return;
+  var pub=publishedById()[id];
+  if(!pub)return;
+  workingSet.prompts.push(deepClone(pub));
+  saveLocal();renderLib();
+  var el=$("pl-"+id);if(el){el.scrollIntoView({block:"center"});flash(el)}
+}
+
+function bindPl(){
+  $("plSearch").oninput=function(){plFilter.q=this.value.trim();renderLib()};
+  $("plLang").onchange=function(){plFilter.lang=this.value;renderLib()};
+  $("plIntent").onchange=function(){plFilter.intent=this.value;renderLib()};
+  $("plCat").onchange=function(){plFilter.cat=this.value;renderLib()};
+  $("plCore").onchange=function(){plFilter.core=this.value;renderLib()};
+  $("plStatus").onchange=function(){plFilter.status=this.value;renderLib()};
+  $("plAdd").onclick=function(){openModal(null)};
+  $("plExport").onclick=exportJSON;
+  $("plImportBtn").onclick=function(){$("plImport").click()};
+  $("plImport").onchange=function(){if(this.files&&this.files[0])importJSON(this.files[0]);this.value=""};
+  $("plReset").onclick=resetPublished;
+  $("prompt-lib").addEventListener("click",function(e){
+    var t=e.target.closest("[data-jump],[data-edit],[data-del],[data-move],[data-restore]");
+    if(!t)return;
+    if(t.hasAttribute("data-jump")){e.preventDefault();jumpToHeatmap(t.getAttribute("data-jump"));return}
+    if(t.hasAttribute("data-edit")){var f=findPrompt(t.getAttribute("data-edit"));if(f)openModal(f.p);return}
+    if(t.hasAttribute("data-del")){deletePrompt(t.getAttribute("data-del"));return}
+    if(t.hasAttribute("data-move")){movePrompt(t.getAttribute("data-id"),t.getAttribute("data-move"));return}
+    if(t.hasAttribute("data-restore")){restorePrompt(t.getAttribute("data-restore"));return}
+  });
+  $("pfAddFact").onclick=function(){$("pfFacts").insertAdjacentHTML("beforeend",factRowHtml())};
+  $("pfAddFlag").onclick=function(){$("pfFlags").insertAdjacentHTML("beforeend",flagRowHtml())};
+  $("pfFacts").addEventListener("click",function(e){var b=e.target.closest("[data-rm-fact]");if(b){var row=b.closest(".fact-row");if(row)row.parentNode.removeChild(row)}});
+  $("pfFlags").addEventListener("click",function(e){var b=e.target.closest("[data-rm-flag]");if(b){var row=b.closest(".flag-row");if(row)row.parentNode.removeChild(row)}});
+  $("plForm").onsubmit=function(e){e.preventDefault();saveForm()};
+  $("plModalClose").onclick=$("plModalCancel").onclick=function(e){e.preventDefault();closeModal()};
+  $("plModal").addEventListener("click",function(e){if(e.target===$("plModal"))closeModal()});
+  document.addEventListener("keydown",function(e){if(e.key==="Escape"&&!$("plModal").hidden)closeModal()});
+  document.addEventListener("click",function(e){
+    var a=e.target.closest("a.hm-link");
+    if(!a)return;
+    var href=a.getAttribute("href")||"";
+    if(href.indexOf("#pl-")===0){
+      var el=$(href.slice(1));
+      if(el)setTimeout(function(){flash(el)},0);
+    }
+  });
+}
+
+function initPromptLib(){
+  bindPl();
+  function done(src){
+    $("plSource").textContent=src;
+    var local=loadLocal();
+    workingSet=local?local:deepClone(publishedSet);
+    renderLib();
+    if(location.hash&&location.hash.indexOf("#pl-")===0){
+      var el=$(location.hash.slice(1));if(el){el.scrollIntoView({block:"center"});flash(el)}
+    }
+  }
+  fetch("prompts.json",{cache:"no-store"}).then(function(r){
+    if(!r.ok)throw new Error("http "+r.status);
+    return r.json();
+  }).then(function(data){
+    publishedSet=normalizeSet(data);
+    done("已从 prompts.json 加载已发布版本");
+  }).catch(function(){
+    publishedSet=normalizeSet(PUBLISHED_PROMPTS);
+    done("未读到 prompts.json，已使用页面内嵌的已发布副本（htmlpreview 或本地打开时属正常情况）");
+  });
+}
+
 </script>
 </body>
 </html>
