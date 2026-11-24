@@ -17,7 +17,7 @@
 
 也可以跳过页面编辑，直接在仓库里改 `prompts.json` 后提交。
 
-`index.html` 内嵌了一份已发布副本。htmlpreview 只渲染这一个 HTML 文件，读不到旁边的 `prompts.json`，因此会自动退回内嵌副本，预览链接仍可用。用 GitHub Pages 或直接打开站点时，页面会优先读取仓库中的 `prompts.json`。
+`index.html` 内嵌了一份已发布副本，作为 `prompts.json` 读取失败时的后备。htmlpreview 会把页面基准地址指到 GitHub raw，因此通常也能加载仓库里的 `prompts.json`；若读取失败（例如离线打开 HTML），页面会自动改用内嵌副本。用 GitHub Pages 打开时，同样优先读取仓库中的 `prompts.json`。
 
 ## 注意
 

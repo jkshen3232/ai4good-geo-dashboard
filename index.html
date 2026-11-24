@@ -937,7 +937,7 @@ function initPromptLib(){
     done("已从 prompts.json 加载已发布版本");
   }).catch(function(){
     publishedSet=normalizeSet(PUBLISHED_PROMPTS);
-    done("未读到 prompts.json，已使用页面内嵌的已发布副本（htmlpreview 或本地打开时属正常情况）");
+    done("未读到 prompts.json，已使用页面内嵌的已发布副本（离线打开或预览服务读不到该文件时属正常情况）");
   });
 }
 
