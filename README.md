@@ -6,8 +6,9 @@
 
 ## 文件
 
-- `index.html` — 报告正文、热力图、指标切换、每周趋势、Prompt 库。
+- `index.html` — 报告正文、热力图、指标切换、每周趋势、Prompt 库。可用「期次」对照 2026-11-22 基线与后续复测。
 - `prompts.json` — 已发布的测试 prompt 集（含 `version`、`updated_at`、`changelog`）。每周复测以该文件为最新题库，默认跑其中 `core` 为 true 的条目（见 `core_prompt_ids`）。
+- `history/` — 周复测对照历史（`history.csv`、`history_prompts.csv` 为追加写入；含各期 weekly diff）。只含汇总指标与逐条评分，不含模型原始回答。
 
 ## 如何把页面上的编辑变成已发布版本
 

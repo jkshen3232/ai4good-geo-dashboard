@@ -33,6 +33,10 @@ th,td{padding:9px 10px;border-bottom:1px solid var(--line);text-align:left;verti
 th{color:var(--muted);font-weight:600;font-size:13px;white-space:nowrap}
 td.num,th.num{text-align:right;white-space:nowrap}
 td.c,th.c{text-align:center;white-space:nowrap}
+tr.incomp td{color:var(--muted)}
+.flag{display:inline-block;font-size:12px;border:1px solid var(--line);border-radius:999px;padding:1px 8px;margin-left:6px;color:var(--muted);vertical-align:middle}
+.changelog{margin:12px 0 0;padding-left:22px}
+.changelog li{margin:8px 0}
 .hl{background:var(--accent-soft)}
 .bars{margin:18px 0 6px}
 .bar-row{display:grid;grid-template-columns:110px 1fr 64px;gap:10px;align-items:center;margin:7px 0;font-size:14px}
@@ -117,29 +121,30 @@ code{font-size:12.5px;background:#eef0f3;padding:1px 5px;border-radius:4px}
 <body>
 <div class="wrap" id="top">
 <h1>AI4GOOD GEO 调查报告</h1>
-<p class="summary">2026-11-22 未登录基线：六个平台、核心 20 条 prompt。数字均出自当日日志，对照 site-check.md。</p>
+<p class="summary">2026-11-25 补跑对照 11-22 基线：只有 ChatGPT、Gemini、Google 概览可比。ChatGPT 小幅变好（提到 16/20，并首次答对 D-ZH-01）；Gemini 与 Google 的英文品牌与同名混淆仍偏弱。Perplexity、千问、文心因登录墙或验证码不可比，不要当成跌幅。</p>
 <nav class="toc">
 <a href="#summary">结论摘要</a><a href="#baseline">各平台基线</a><a href="#method">测试方法</a><a href="#prompts">按意图与 prompt 的表现</a><a href="#prompt-lib">Prompt 库</a><a href="#errors">反复出现的错误事实</a><a href="#sources">引用来源分析</a><a href="#recs">优化建议</a><a href="#gaps">已知缺口</a><a href="#weekly">每周变化记录</a>
 </nav>
 
 <section id="summary">
 <div class="sec-head"><h2>结论摘要</h2></div>
-<div class="callout"><b>v1 基线</b>ChatGPT 领先（15/20 提到，准确度 2.06）。三条不带品牌名的品类问题全部落空。英文品牌与同名辨析是主要缺口。模型仍在引用 503 中的 .cn 缓存。</div>
+<div class="callout"><b>2026-11-25 补跑</b>可比的三个平台里，ChatGPT 仍领先（提到 16/20，准确度 2.18，第一方引用 14/20），并首次在未登录状态下把上海爱益谷与联合国 AI for Good 区分开。Gemini 与 Google 概览的英文品牌、创始人和 GEO 服务仍常答成同名机构或 Brian Keating。www.ai-4good.cn 已从 503 恢复为 200，但中文答案仍在引用爱老师、龙文路、inquiry@ 等旧文案。</div>
 <ol>
-<li>ChatGPT 明显领先：20 条中 15 条提到我们，平均准确度 2.06（满分 3，17 条计分），10/20 引用了 ai-4good.ai。</li>
-<li>三条不带品牌名的品类问题（C-*）在六个已测平台上都没有推荐我们。</li>
-<li>英文品牌问题和「是否与联合国 AI for Good 为同一家」（D-ZH-01）是最大缺口。D-ZH-01 在五个平台上失败，只有通义千问把上海这家公司说成独立主体。</li>
-<li>反复出现的错误事实包括：把 LV 写成客户；过期的 .cn 内容（爱老师、爱公益、徐汇地址、inquiry@ai-4good.ai）；未经官网证实的「2024 年成立」；千问编造的伦敦办公室；把 keating.help 的 €39 / €49 / €99 标价安到 KEATING.AI 头上；把 keating.ai（Brian Keating）当成 KEATING.AI。</li>
-<li>中文检索更多引用的是仍为 503 的 .cn 缓存和 chatgpt.site 洞察页，而不是当前 ai-4good.ai。日志里 ai4good.org（同名基金会）的来源条目（34）多于 ai-4good.ai（17）。通义千问一次都没有引用我方域名。</li>
+<li>只有 ChatGPT、Gemini、Google AI 概览可与 11-22 基线直接比较。Perplexity 20 条登录墙，千问几乎全部需登录，文心 18 条遇验证码未测：这些不是提到率下跌。</li>
+<li>ChatGPT：提到 15/20 → 16/20，准确度 2.06 → 2.18，第一方引用 10/20 → 14/20，混淆 3 → 2。最大正向变化是 D-ZH-01 从失败改为答对。</li>
+<li>Gemini：提到 4/20 → 5/20，但准确度 0.41 → 0.29，混淆 11 → 13。S-EN-01 从识别本公司 GEO 退回联合国 GeoAI。</li>
+<li>Google 概览：提到 10/19 → 10/20（C-ZH-01 本周有了概览，分母增 1，不是少了一条有效提到）；F-EN-01 从正确答出 JK Shen 退回只写 James Hodson。第一方引用 10/19 → 5/20，但引用 URL 被模糊，可能低估。</li>
+<li>三条不带品牌名的品类题仍全部落空。英文 What is AI4GOOD、KEATING.AI 与 keating.ai 的辨析，仍是主要缺口。</li>
+<li>www.ai-4good.cn 已恢复 HTTP 200 且无 noindex；llms.txt 仍为 404，页面仍无 schema.org。中文检索已开始引用 .cn，但内容仍常是爱老师 / 爱课堂 / 龙文路 / inquiry@ 等旧文案。</li>
 </ol>
 </section>
 
 <section id="baseline">
-<div class="sec-head"><h2>各平台基线</h2><div class="controls"><div class="seg" id="segBase"></div></div></div>
+<div class="sec-head"><h2>各平台结果</h2><div class="controls"><label class="sel">期次 <select id="selBasePeriod"></select></label><div class="seg" id="segBase"></div></div></div>
 <div class="tbl"><table id="statsTbl"></table></div>
 <div class="bars" id="bars"></div>
-<p>Google AI 概览另有 11 / 20 次搜索在第一页出现我方或很可能属于我们的结果（6 次为可确认的官网主机，5 次为网址未读到的 LinkedIn 公司页或「2 mins on Keating AI」帖）。</p>
-<p class="caption">千问分母是 14：4 条需登录、2 条未测不计入；4 条拒答计为未提到。Google 分母是 19，C-ZH-01 无法生成概览。准确度满分 3，品类题未提到时不计入平均分。</p>
+<p id="baseExtra"></p>
+<p class="caption" id="baseCaption">柱状图只画可比平台，避免把登录墙或验证码画成 0。准确度满分 3，品类题未提到时不计入平均分。关键词初标已按评分标准复核。</p>
 </section>
 
 <section id="method">
@@ -147,8 +152,9 @@ code{font-size:12.5px;background:#eef0f3;padding:1px 5px;border-radius:4px}
 <ul>
 <li>六个已测平台：ChatGPT、Perplexity、Gemini、Google AI 概览（仅 AI Overview，不用 AI Mode）、通义千问（Qwen-快速，tongyi.com 跳转 qianwen.com）、文心一言（百度文心助手，默认对话，自动全球搜）。</li>
 <li>核心 20 条 prompt，覆盖 10 个意图：B 品牌与公司身份、F 创始人与职务、P 产品理解（KEATING.AI）、S 服务、D 同名辨析、C 非品牌类目发现、X 对比与替代、T 信任与证据、A 行动与购买、L 地域与市场。</li>
-<li>方法：未登录、无痕窗口，每条问题新开对话或新搜索，记录 PST 时间戳和当日可见来源。测试日期 2026-11-22（PST）。</li>
-<li>需登录、未测：Copilot、Grok、豆包、Kimi、DeepSeek、腾讯元宝。platforms.md 将约 2026-11-20 的非正式测试记为已撞登录墙；本基线未再登录尝试。</li>
+<li>方法：未登录轨道每条问题新开对话或新搜索。11-22 基线为无痕窗口，时间戳为 PST；11-25 补跑为新标签页（无无痕模式），时间戳为北京时间。</li>
+<li>拒答计入提到率与准确度分母；登录墙、验证码未测、无概览不计入这两项分母，也不当成指标下跌。</li>
+<li>登录态轨道（豆包、Kimi）与未登录趋势分开记录。11-25 因账号已登出，两条轨道各 20 条均未测。</li>
 </ul>
 </section>
 
@@ -166,7 +172,7 @@ code{font-size:12.5px;background:#eef0f3;padding:1px 5px;border-radius:4px}
 <p class="caption">表格为准。斜纹格为未计分（需登录、未测、无概览，或品类题未提到时的准确度）。Gemini 的 D-ZH-01 为测试摘要推断，不是逐字记录。「按意图汇总」为该意图下各 prompt 的平均值，不含未计分格。</p>
 <h3>明细表</h3>
 <div class="tbl"><table id="promptTbl"></table></div>
-<p>三条 C 组类目题六个平台均为未提到（Google 的 C-ZH-01 为无概览）。S-ZH-02 六个平台都提到了我们。P-ZH-03（三个模块）只有 ChatGPT 认成我们的产品。D-ZH-01 只有千问答对。</p>
+<p>用上方「期次」切换 11-22 与 11-25。本周可比平台上，C 组仍全部未提到（Google 的 C-ZH-01 本周已能生成概览，仍未推荐我们）。ChatGPT 的 D-ZH-01 从基线失败改为答对。Google 的 F-EN-01、Gemini 的 S-EN-01 出现回退。Perplexity / 千问 / 文心的空白格是登录墙或未测，不是提到率为零。</p>
 </section>
 
 
@@ -199,7 +205,7 @@ code{font-size:12.5px;background:#eef0f3;padding:1px 5px;border-radius:4px}
 
 <section id="errors">
 <div class="sec-head"><h2>反复出现的错误事实</h2></div>
-<p>对照 22 日官网：Chanel、Fendi 等以 logo alt 出现在「客户伙伴」中；路易威登 / LV 不在当日直播页。成立年份、街道地址、inquiry@ai-4good.ai、爱老师 / 爱课堂 / 爱伴老均不在当日官网。www.ai-4good.cn 当日 21:11 PST 仍为 HTTP 503。</p>
+<p>对照官网：Chanel、Fendi 出现在客户伙伴 logo 中；路易威登 / LV 不在 11-22 直播页。成立年份、街道地址、inquiry@ai-4good.ai、爱老师 / 爱课堂 / 爱伴老均不在现行官网。www.ai-4good.cn 在 11-22 为 HTTP 503，11-25 已恢复 200 且无 noindex，但这些旧事实仍被引用。</p>
 <ul>
 <li>把 LV 写成客户：ChatGPT T-ZH-01 称来自官网客户伙伴 logo；Perplexity T-ZH-01、T-EN-01 也列入路易威登。Google T-ZH-01 的概览正文未点名，但自然搜索结果里的 chatgpt.site 摘要出现过 LV。可能来自该洞察页或其他非官网来源。</li>
 <li>过期的 .cn 内容：爱老师出现在 Perplexity（B-ZH-01、S-ZH-02）、Gemini（B-ZH-01）、Google 概览（B-ZH-01、S-ZH-02、A-ZH-01）。爱公益出现在 Perplexity 与 Google 的 B-ZH-01。徐汇区龙文路旧地址出现在 Gemini B-ZH-01、Google A-ZH-01；文心 B-ZH-01 则把登记地址写成徐汇区桂平路 391 号。inquiry@ai-4good.ai 出现在 Google A-ZH-01、千问 T-ZH-01、文心 A-ZH-01。</li>
@@ -207,8 +213,9 @@ code{font-size:12.5px;background:#eef0f3;padding:1px 5px;border-radius:4px}
 <li>伦敦办公室：仅通义千问 T-ZH-01 编造；官网地理是上海、新加坡、北美。</li>
 <li>keating.help 标价：Perplexity A-EN-02 把 €39 / €49 / €99 当成 KEATING.AI 的套餐，来源是无关产品 keating.help（经 softwarefinder）。文心 A-EN-02 明确没有把该标价安到我们头上。</li>
 <li>把 keating.ai 当成 KEATING.AI：Perplexity、Gemini、Google 概览在英文产品 / 辨析 / 案例题中，常把主定义写成加州大学圣地亚哥分校 Brian Keating 的个人站，或声称域名不区分大小写故为同一站点。</li>
-<li>同名机构混淆：英文 AI4GOOD 常被答成伯克利 AI for Good Foundation（ai4good.org，James Hodson）、ITU AI for Good，或加拿大 AI4Good Lab。六个平台里，千问在已回答内容中混淆次数为 0；Gemini 最高（11 次）。</li>
+<li>同名机构混淆：英文 AI4GOOD 常被答成伯克利 AI for Good Foundation（ai4good.org，James Hodson）、ITU AI for Good，或加拿大 AI4Good Lab。基线六个平台里，千问在已回答内容中混淆次数为 0；Gemini 最高（11 次，本周 13 次）。</li>
 </ul>
+<p><b>2026-11-25 补跑更新：</b>ChatGPT T-ZH-01 仍把 Louis Vuitton 写成官网客户；F-EN-01、D-ZH-01 与 Google L-EN-01 仍写「2024 年成立」。Gemini / Google 的中文题在 .cn 恢复后仍引用爱老师、爱课堂、爱伴老、爱公益、徐汇龙文路和 inquiry@。ChatGPT D-EN-02 仍把 KEATING.AI 与 keating.ai 写成同一名称的大小写差异。明显回退：Google F-EN-01 从正确答出 JK Shen 退回只写 James Hodson；Gemini S-EN-01 从识别本公司 GEO 退回联合国 GeoAI。英文 What is AI4GOOD（B-EN-01）在三个可比平台上全部失败。</p>
 </section>
 
 <section id="sources">
@@ -217,7 +224,7 @@ code{font-size:12.5px;background:#eef0f3;padding:1px 5px;border-radius:4px}
 <thead><tr><th>域名</th><th>来源条目数</th><th>说明</th></tr></thead>
 <tbody>
 <tr><td>ai4good.org</td><td>34</td><td>同名基金会，不是我们</td></tr>
-<tr><td>ai-4good.cn</td><td>27</td><td>全部记为我方；站点当日 503，内容为旧缓存</td></tr>
+<tr><td>ai-4good.cn</td><td>27（11-22 基线）</td><td>11-22 全部记为我方，但站点当日 503、内容为旧缓存。11-25 站点已恢复 HTTP 200 且无 noindex，中文答案开始引用它，但内容仍常是旧产品名和旧联系方式。</td></tr>
 <tr><td>ai-4good.ai</td><td>17</td><td>我方现行官网；主要来自 ChatGPT（15 条），Perplexity 与 Google 概览各 1 条</td></tr>
 <tr><td>linkedin.com</td><td>13（其中 9 条记为我方）</td><td>Perplexity 有可确认的 /in/jkshen、/company/ai-4good；Google 概览多次为网址未核实的公司页或「2 mins on Keating AI」帖</td></tr>
 <tr><td>ai4goodlab.com</td><td>9</td><td>加拿大同名实验室</td></tr>
@@ -227,16 +234,17 @@ code{font-size:12.5px;background:#eef0f3;padding:1px 5px;border-radius:4px}
 <tr><td>ai4good-insights.jackieshen75.chatgpt.site</td><td>7</td><td>JK 撰写的 GEO 洞察页；Gemini、Google 概览、Perplexity 有引用，摘要有时仍写 LV</td></tr>
 <tr><td>keating.ai-4good.cn</td><td>1</td><td>我方 .cn 产品子域，出现在 Google 概览</td></tr>
 </tbody></table></div>
-<p>按平台看我方引用：ChatGPT 全部为 ai-4good.ai；Perplexity 以 .cn 缓存为主，兼有 LinkedIn、洞察页和 1 条 .ai；Gemini 为 .cn 与洞察页；Google 概览为 .cn、未核实 LinkedIn、洞察页、.ai 与 keating.ai-4good.cn；文心 5 条全部为 .cn 缓存；千问 0 条。</p>
+<p>11-22 按平台看我方引用：ChatGPT 全部为 ai-4good.ai；Perplexity 以 .cn 缓存为主，兼有 LinkedIn、洞察页和 1 条 .ai；Gemini 为 .cn 与洞察页；Google 概览为 .cn、未核实 LinkedIn、洞察页、.ai 与 keating.ai-4good.cn；文心 5 条全部为 .cn 缓存；千问 0 条。</p>
+<p>11-25 可确认的我方引用：ChatGPT 以 ai-4good.ai 为主（带 URL 的条目增多，14/20），T-ZH-01 还引了 .cn；Gemini 仍为 3/20（.cn 与洞察页）；Google 中文题多为「Ai4good」「让AI做好人用AI做好事」等标题（5/20），引用 URL 被模糊，可能低估。英文题的自然结果仍常是 keating.ai、keating.help、ai4good.org 与 ITU。</p>
 <p class="caption">统计范围为六份 results.jsonl 中的来源条目（按域名归并，去掉 www）。共 345 条没有可读域名，主要来自千问、文心，以及部分 ChatGPT / Gemini 芯片。</p>
 </section>
 
 <section id="recs">
 <div class="sec-head"><h2>优化建议</h2></div>
 <ol>
-<li>开放 www.ai-4good.cn（21:11 PST 仍为 503、noindex）。中文检索正在引用旧缓存，这是最快能改写模型答案的源头之一。</li>
-<li>上线 llms.txt（当日官网为 404）。草稿在 /workspace/geo-fixes/llms.txt。</li>
-<li>在首页加入组织 / 产品 JSON-LD。当日页面无 JSON-LD；草稿在 /workspace/geo-fixes/schema-homepage.html。</li>
+<li>清理已恢复的 www.ai-4good.cn 旧文案（爱老师、爱课堂、爱伴老、爱公益、徐汇地址、inquiry@）。站点已从 503 恢复为 200 且无 noindex，但旧文案仍被中文答案引用，这是目前最能改写模型答案的一步。</li>
+<li>上线 llms.txt（11-25 官网仍为 404）。</li>
+<li>在首页加入组织 / 产品 JSON-LD。11-25 在 /、/keating-en、/company-en 仍未发现 schema.org / JSON-LD。</li>
 <li>为不带品牌名的品类问题准备可被引用的公开内容（奢侈品 / 高端零售陪练、国内 GEO 服务、高端零售对话工具），否则 C 组很难被推荐。</li>
 <li>加强英文品牌与同名辨析：明确本企业不是 ITU AI for Good、不是 ai4good.org 基金会，KEATING.AI 不是 keating.ai 或 keating.help。</li>
 <li>在源头修正错误事实：洞察页与对外材料不要把 LV 写成官方客户；更新或下线旧 .cn 文案（爱老师、爱公益、徐汇地址、inquiry@）；不要把「2024 年成立」写成现行官网信息。</li>
@@ -246,23 +254,31 @@ code{font-size:12.5px;background:#eef0f3;padding:1px 5px;border-radius:4px}
 <section id="gaps">
 <div class="sec-head"><h2>已知缺口</h2></div>
 <ul class="chk">
-<li>Gemini 的 D-ZH-01 依据测试摘要推断，不是逐字记录。</li>
-<li>通义千问有 6 条没有完整答案：D-EN-02、X-EN-01、T-EN-01、A-ZH-01 需登录；A-EN-02、L-EN-01 因此未测。另有 4 条拒答已计入分母。</li>
-<li>Gemini 场次一大部分截图未保留，目前只留下 T-EN-01、A-EN-02、L-EN-01。</li>
-<li>文心 F-EN-01 先用错过题，以 21:05:45 PST 的正确 prompt 重测为准。</li>
+<li>Gemini 的 D-ZH-01 在 11-22 依据测试摘要推断，不是逐字记录。</li>
+<li>11-22 通义千问有 6 条没有完整答案：D-EN-02、X-EN-01、T-EN-01、A-ZH-01 需登录；A-EN-02、L-EN-01 因此未测。另有 4 条拒答已计入分母。</li>
+<li>11-25 Perplexity 20 条登录墙，无法与基线比较。</li>
+<li>11-25 通义千问 18 条需登录、1 条未测，仅 B-ZH-01 拒答可计分。</li>
+<li>11-25 文心一言 18 条因百度验证码未测；已采集的 2 条页面含侧边栏，正文更像创始人/CEO 问答。</li>
+<li>11-25 豆包、Kimi 因账号登出全部未测，不并入未登录趋势。</li>
+<li>11-25 Gemini 来源只有名称；Google 概览引用 URL 被模糊，第一方引用可能低估。采集无无痕模式，时间戳为北京时间。</li>
 </ul>
-<p class="caption">截至 2026-11-22 的记录状态。</p>
+<p class="caption">截至 2026-11-25 的记录状态。</p>
 </section>
 
 <section id="weekly">
 <div class="sec-head"><h2>每周变化记录</h2><div class="controls"><div class="seg" id="segTrend"></div></div></div>
+<div class="callout"><b>对照说明</b>趋势图和百分比只画两次都跑完的 ChatGPT、Gemini、Google 概览。Perplexity（登录墙）、通义千问（几乎全部需登录）、文心一言（验证码未测）在 11-25 不可比，不画成 0，也不当成跌幅。豆包、Kimi 为登录态轨道，本周因账号登出未测，不并入本图。</div>
 <div id="trendChart"></div>
 <div class="tbl"><table id="trendTbl"></table></div>
-<p>2026-11-22 v1 基线：六个平台未登录核心 20 条已测完，本报告为对照起点。</p>
-<p class="caption">目前只有 2026-11-22 一个时点，图上每个平台只有一个点。每周复测会追加新的期次。</p>
+<h3>更新记录</h3>
+<ul class="changelog">
+<li><b>2026-11-25</b> 补跑 11-23 未执行的周复测。ChatGPT 提到 15/20 → 16/20，D-ZH-01 首次答对；Google F-EN-01 与 Gemini S-EN-01 回退。www.ai-4good.cn 从 503 变为 200，无 noindex，但旧文案仍被引用。llms.txt 仍为 404，页面仍无 schema.org。完整对照见 <a href="history/2026-11-25_weekly_diff.md">history/2026-11-25_weekly_diff.md</a>。</li>
+<li><b>2026-11-22</b> v1 基线：六个平台未登录核心 20 条已测完，本报告为对照起点。当日 www.ai-4good.cn 为 HTTP 503。</li>
+</ul>
+<p class="caption">趋势图跳过不可比平台，避免把登录墙画成提到率为 0。历史汇总（追加、不覆盖旧行）见 <a href="history/history.csv">history/history.csv</a> 与 <a href="history/history_prompts.csv">history/history_prompts.csv</a>。</p>
 </section>
 
-<footer>数据截至 2026-11-22 基线，每周更新</footer>
+<footer>数据截至 2026-11-25 补跑，对照 2026-11-22 基线，每周更新</footer>
 </div>
 
 <div id="plModal" class="modal" hidden>
@@ -334,13 +350,45 @@ var PERIODS=[
    ["A-EN-02","A",{chatgpt:"Y/3/Y/N",perplexity:"N/0/N/Y",gemini:"N/0/N/Y",google:"N/0/N/Y",qwen:"NA",wenxin:"N/0/N/N"}],
    ["L-EN-01","L",{chatgpt:"Y/3/Y/N",perplexity:"N/0/N/Y",gemini:"N/0/N/Y",google:"Y/2/Y/N",qwen:"NA",wenxin:"Y/2/Y/N"}]
   ],
-  naNotes:{"qwen|D-EN-02":"需登录","qwen|X-EN-01":"需登录","qwen|T-EN-01":"需登录","qwen|A-ZH-01":"需登录","qwen|A-EN-02":"未测","qwen|L-EN-01":"未测","google|C-ZH-01":"无概览"}
+ },
+ {date:"2026-11-25",label:"2026-11-25 补跑",note:"补跑；.cn 已恢复 200。Perplexity / 千问 / 文心不可比",
+  stats:{
+   chatgpt:{comparable:true,mention:"16 / 20（80%）",mentionPct:80,accuracy:2.18,accuracyN:17,ours:"14 / 20（70%）",oursPct:70,confusion:2,mentionShort:"80%（16/20）"},
+   perplexity:{comparable:false,mention:"不可比",mentionPct:null,accuracy:null,accuracyN:0,ours:"不可比",oursPct:null,confusion:null,mentionShort:"不可比（登录墙）",caveat:"20 条全部登录墙，不能当成从 8/20 掉到 0"},
+   gemini:{comparable:true,mention:"5 / 20（25%）",mentionPct:25,accuracy:0.29,accuracyN:17,ours:"3 / 20（15%）",oursPct:15,confusion:13,mentionShort:"25%（5/20）"},
+   google:{comparable:true,mention:"10 / 20（50%）",mentionPct:50,accuracy:0.82,accuracyN:17,ours:"5 / 20（25%）",oursPct:25,confusion:9,mentionShort:"50%（10/20）",caveat:"C-ZH-01 本周有了概览，分母从 19 变为 20"},
+   qwen:{comparable:false,mention:"不可比（0 / 1）",mentionPct:null,accuracy:0,accuracyN:1,ours:"0 / 1",oursPct:null,confusion:0,mentionShort:"不可比（需登录）",caveat:"1 条拒答、18 条需登录、1 条未测，不能和基线 14 条分母相比"},
+   wenxin:{comparable:false,mention:"不可比（2 / 2）",mentionPct:null,accuracy:1.0,accuracyN:2,ours:"0 / 2",oursPct:null,confusion:2,mentionShort:"不可比（验证码）",caveat:"只跑成 2 条，其余 18 条因百度验证码未测"}
+  },
+  prompts:[
+   ["B-ZH-01","B",{chatgpt:"Y/2/N/N",perplexity:"NA",gemini:"Y/1/Y/N",google:"Y/1/Y/N",qwen:"N/0/N/N/拒答",wenxin:"Y/1/N/Y"}],
+   ["B-EN-01","B",{chatgpt:"N/0/N/Y",perplexity:"NA",gemini:"N/0/N/Y",google:"N/0/N/Y",qwen:"NA",wenxin:"Y/1/N/Y"}],
+   ["F-ZH-01","F",{chatgpt:"Y/3/Y/N",perplexity:"NA",gemini:"N/0/N/Y",google:"Y/2/Y/N",qwen:"NA",wenxin:"NA"}],
+   ["F-EN-01","F",{chatgpt:"Y/2/N/N",perplexity:"NA",gemini:"N/0/N/Y",google:"N/0/N/Y",qwen:"NA",wenxin:"NA"}],
+   ["P-ZH-01","P",{chatgpt:"Y/3/Y/N",perplexity:"NA",gemini:"N/0/N/Y",google:"Y/2/N/Y",qwen:"NA",wenxin:"NA"}],
+   ["P-ZH-03","P",{chatgpt:"Y/3/Y/N",perplexity:"NA",gemini:"N/0/N/N",google:"N/0/N/N",qwen:"NA",wenxin:"NA"}],
+   ["P-EN-01","P",{chatgpt:"Y/2/Y/N",perplexity:"NA",gemini:"N/0/N/Y",google:"Y/1/N/Y",qwen:"NA",wenxin:"NA"}],
+   ["S-ZH-02","S",{chatgpt:"Y/2/Y/N",perplexity:"NA",gemini:"Y/1/N/N",google:"Y/1/Y/N",qwen:"NA",wenxin:"NA"}],
+   ["S-EN-01","S",{chatgpt:"Y/3/Y/N",perplexity:"NA",gemini:"N/0/N/Y",google:"N/0/N/Y",qwen:"NA",wenxin:"NA"}],
+   ["D-ZH-01","D",{chatgpt:"Y/2/Y/N",perplexity:"NA",gemini:"N/0/N/Y",google:"N/0/N/Y",qwen:"NA",wenxin:"NA"}],
+   ["D-EN-02","D",{chatgpt:"Y/1/Y/Y",perplexity:"NA",gemini:"Y/1/N/Y",google:"N/0/N/Y",qwen:"NA",wenxin:"NA"}],
+   ["C-ZH-01","C",{chatgpt:"N/-/N/N",perplexity:"NA",gemini:"N/-/N/N",google:"N/-/N/N",qwen:"NA",wenxin:"NA"}],
+   ["C-ZH-03","C",{chatgpt:"N/-/N/N",perplexity:"NA",gemini:"N/-/N/N",google:"N/-/N/N",qwen:"NA",wenxin:"NA"}],
+   ["C-EN-01","C",{chatgpt:"N/-/N/N",perplexity:"NA",gemini:"N/-/N/N",google:"N/-/N/N",qwen:"NA",wenxin:"NA"}],
+   ["X-EN-01","X",{chatgpt:"Y/2/Y/N",perplexity:"NA",gemini:"N/0/N/Y",google:"Y/2/N/N",qwen:"NA",wenxin:"NA"}],
+   ["T-ZH-01","T",{chatgpt:"Y/2/Y/N",perplexity:"NA",gemini:"Y/1/Y/Y",google:"Y/2/Y/N",qwen:"NA",wenxin:"NA"}],
+   ["T-EN-01","T",{chatgpt:"Y/2/Y/N",perplexity:"NA",gemini:"N/0/N/Y",google:"Y/1/N/Y",qwen:"NA",wenxin:"NA"}],
+   ["A-ZH-01","A",{chatgpt:"Y/3/Y/N",perplexity:"NA",gemini:"Y/1/Y/N",google:"Y/1/Y/N",qwen:"NA",wenxin:"NA"}],
+   ["A-EN-02","A",{chatgpt:"Y/3/Y/N",perplexity:"NA",gemini:"N/0/N/Y",google:"N/0/N/Y",qwen:"NA",wenxin:"NA"}],
+   ["L-EN-01","L",{chatgpt:"Y/2/Y/N",perplexity:"NA",gemini:"N/0/N/Y",google:"Y/1/N/N",qwen:"NA",wenxin:"NA"}]
+  ],
+  naNotes:{"perplexity|B-ZH-01":"登录墙","perplexity|B-EN-01":"登录墙","perplexity|F-ZH-01":"登录墙","perplexity|F-EN-01":"登录墙","perplexity|P-ZH-01":"登录墙","perplexity|P-ZH-03":"登录墙","perplexity|P-EN-01":"登录墙","perplexity|S-ZH-02":"登录墙","perplexity|S-EN-01":"登录墙","perplexity|D-ZH-01":"登录墙","perplexity|D-EN-02":"登录墙","perplexity|C-ZH-01":"登录墙","perplexity|C-ZH-03":"登录墙","perplexity|C-EN-01":"登录墙","perplexity|X-EN-01":"登录墙","perplexity|T-ZH-01":"登录墙","perplexity|T-EN-01":"登录墙","perplexity|A-ZH-01":"登录墙","perplexity|A-EN-02":"登录墙","perplexity|L-EN-01":"登录墙","qwen|B-EN-01":"未测","qwen|F-ZH-01":"需登录","qwen|F-EN-01":"需登录","qwen|P-ZH-01":"需登录","qwen|P-ZH-03":"需登录","qwen|P-EN-01":"需登录","qwen|S-ZH-02":"需登录","qwen|S-EN-01":"需登录","qwen|D-ZH-01":"需登录","qwen|D-EN-02":"需登录","qwen|C-ZH-01":"需登录","qwen|C-ZH-03":"需登录","qwen|C-EN-01":"需登录","qwen|X-EN-01":"需登录","qwen|T-ZH-01":"需登录","qwen|T-EN-01":"需登录","qwen|A-ZH-01":"需登录","qwen|A-EN-02":"需登录","qwen|L-EN-01":"需登录","wenxin|F-ZH-01":"验证码未测","wenxin|F-EN-01":"验证码未测","wenxin|P-ZH-01":"验证码未测","wenxin|P-ZH-03":"验证码未测","wenxin|P-EN-01":"验证码未测","wenxin|S-ZH-02":"验证码未测","wenxin|S-EN-01":"验证码未测","wenxin|D-ZH-01":"验证码未测","wenxin|D-EN-02":"验证码未测","wenxin|C-ZH-01":"验证码未测","wenxin|C-ZH-03":"验证码未测","wenxin|C-EN-01":"验证码未测","wenxin|X-EN-01":"验证码未测","wenxin|T-ZH-01":"验证码未测","wenxin|T-EN-01":"验证码未测","wenxin|A-ZH-01":"验证码未测","wenxin|A-EN-02":"验证码未测","wenxin|L-EN-01":"验证码未测"}
  }
 ];
 
 /* ============================ 逻辑区 ============================ */
 var METRICS=[{v:"mention",l:"提到",col:1},{v:"accuracy",l:"准确度",col:2},{v:"ours",l:"第一方引用",col:3},{v:"confusion",l:"混淆",col:4}];
-var S={base:"mention",pm:"mention",view:"prompt",period:PERIODS.length-1,platform:"all",intent:"all",trend:"mention"};
+var S={base:"mention",pm:"mention",view:"prompt",period:PERIODS.length-1,basePeriod:PERIODS.length-1,platform:"all",intent:"all",trend:"mention"};
 function $(id){return document.getElementById(id)}
 function esc(s){return String(s).replace(/[&<>"]/g,function(c){return{"&":"\x26amp;","<":"\x26lt;",">":"\x26gt;",'"':"\x26quot;"}[c]})}
 function parse(raw,note){
@@ -361,25 +409,36 @@ function seg(id,opts,key,cb){
  var el=$(id);el.innerHTML=opts.map(function(o){return '<button type="button" data-v="'+o.v+'" class="'+(S[key]===o.v?"on":"")+'">'+o.l+"</button>"}).join("");
  el.onclick=function(e){var b=e.target.closest("button");if(!b)return;S[key]=b.getAttribute("data-v");cb()};
 }
-function statVal(st,m){return m==="mention"?st.mentionPct:m==="accuracy"?st.accuracy:m==="ours"?st.oursPct:st.confusion}
+function isComparable(st){return st&&st.comparable!==false}
+function statVal(st,m){if(!st)return null;var v=m==="mention"?st.mentionPct:m==="accuracy"?st.accuracy:m==="ours"?st.oursPct:st.confusion;return v==null?null:v}
 function disp(m,v){return m==="accuracy"?v.toFixed(2):m==="confusion"?String(v):v+"%"}
 
 /* --- 各平台基线 --- */
 function renderBase(){
  seg("segBase",METRICS,"base",renderBase);
- var P=PERIODS[PERIODS.length-1],col=METRICS.filter(function(x){return x.v===S.base})[0].col;
- var heads=["平台","提到我们","平均准确度（/3）","引用我方页面","与同名机构混淆"];
- var h="<thead><tr>"+heads.map(function(t,i){return '<th class="'+(i?"num":"")+(i===col?" hl":"")+'">'+t+"</th>"}).join("")+"</tr></thead><tbody>";
+ var P=PERIODS[S.basePeriod],col=METRICS.filter(function(x){return x.v===S.base})[0].col;
+ var heads=["平台","提到我们","平均准确度（/3）","引用我方页面","与同名机构混淆","说明"];
+ var h="<thead><tr>"+heads.map(function(t,i){return '<th class="'+(i&&i<5?"num":"")+(i===col?" hl":"")+'">'+t+"</th>"}).join("")+"</tr></thead><tbody>";
  var items=[];
  PLATFORMS.forEach(function(pl){var st=P.stats[pl.key];if(!st)return;
-  var c=[pl.label,st.mention,st.accuracy.toFixed(2)+"（"+st.accuracyN+" 条计分）",st.ours,String(st.confusion)];
-  h+="<tr>"+c.map(function(t,i){return '<td class="'+(i?"num":"")+(i===col?" hl":"")+'">'+esc(t)+"</td>"}).join("")+"</tr>";
-  items.push({l:pl.label,v:statVal(st,S.base)});
+  var acc=st.accuracy==null?"—":(st.accuracy.toFixed(2)+"（"+st.accuracyN+" 条计分）");
+  var conf=st.confusion==null?"—":String(st.confusion);
+  var note=isComparable(st)?"可比":(st.caveat||"不可比");
+  var c=[pl.label,st.mention,acc,st.ours,conf,note];
+  h+='<tr'+(isComparable(st)?'':' class="incomp"')+'>'+c.map(function(t,i){return '<td class="'+(i&&i<5?"num":"")+(i===col?" hl":"")+'">'+esc(t)+'</td>'}).join('')+'</tr>';
+  var v=statVal(st,S.base);
+  if(isComparable(st)&&v!=null)items.push({l:pl.label,v:v});
  });
  $("statsTbl").innerHTML=h+"</tbody>";
  items.sort(function(a,b){return b.v-a.v});
  var max=Math.max.apply(null,items.map(function(i){return i.v}))||1;
  $("bars").innerHTML=items.map(function(it,i){return '<div class="bar-row'+(i===0?" top":"")+'"><span>'+esc(it.l)+'</span><div class="bar-track"><div class="bar-fill" style="width:'+(it.v/max*100)+'%"></div></div><span class="bar-val">'+disp(S.base,it.v)+"</span></div>"}).join("");
+ var extra=$("baseExtra");
+ if(extra){
+  if(P.date==="2026-11-22")extra.textContent="Google AI 概览另有 11 / 20 次搜索在第一页出现我方或很可能属于我们的结果（6 次为可确认的官网主机，5 次为网址未读到的 LinkedIn 公司页或「2 mins on Keating AI」帖）。";
+  else if(P.date==="2026-11-25")extra.textContent="本周 Google 日志里 ours_on_p1 为 2 / 20（基线 11 / 20）。B-ZH-01 的自然结果明确包含 www.ai-4good.cn 与洞察页；F-ZH-01 被记为 Y，但 organic_top5 没有我方主机。采集口径可能不一致，不宜单独解读为第一页暴跌。";
+  else extra.textContent="";
+ }
 }
 
 /* --- 热力图 --- */
@@ -439,9 +498,12 @@ function renderPrompts(){
 function initSelects(){
  $("selPeriod").innerHTML=PERIODS.map(function(p,i){return'<option value="'+i+'">'+esc(p.label)+"</option>"}).join("");
  $("selPeriod").value=String(S.period);
+ $("selBasePeriod").innerHTML=PERIODS.map(function(p,i){return'<option value="'+i+'">'+esc(p.label)+"</option>"}).join("");
+ $("selBasePeriod").value=String(S.basePeriod);
  $("selPlatform").innerHTML='<option value="all">全部平台</option>'+PLATFORMS.map(function(p){return'<option value="'+p.key+'">'+esc(p.label)+"</option>"}).join("");
  $("selIntent").innerHTML='<option value="all">全部意图</option>'+Object.keys(INTENTS).map(function(k){return'<option value="'+k+'">'+esc(INTENTS[k])+"</option>"}).join("");
  $("selPeriod").onchange=function(){S.period=+this.value;renderPrompts()};
+ $("selBasePeriod").onchange=function(){S.basePeriod=+this.value;renderBase()};
  $("selPlatform").onchange=function(){S.platform=this.value;renderPrompts()};
  $("selIntent").onchange=function(){S.intent=this.value;renderPrompts()};
 }
@@ -450,7 +512,7 @@ function initSelects(){
 var LINE_COLORS=["#2f6fed","#e07b39","#1f9d6b","#8e5bd6","#d64545","#5b6b82","#c2a000","#0aa3b5"];
 function renderTrend(){
  seg("segTrend",METRICS,"trend",renderTrend);
- var m=S.trend,max=m==="accuracy"?3:m==="confusion"?Math.max(20,Math.max.apply(null,PERIODS.map(function(p){return Math.max.apply(null,PLATFORMS.map(function(pl){return p.stats[pl.key]?p.stats[pl.key].confusion:0}))}))):100;
+ var m=S.trend,max=m==="accuracy"?3:m==="confusion"?Math.max(20,Math.max.apply(null,PERIODS.map(function(p){return Math.max.apply(null,PLATFORMS.map(function(pl){var st=p.stats[pl.key];return (st&&st.confusion!=null)?st.confusion:0}))}))):100;
  var W=760,H=280,L=44,R=120,T=16,B=36,n=PERIODS.length;
  function x(i){return n===1?L+(W-L-R)/2:L+i*(W-L-R)/(n-1)}
  function y(v){return T+(H-T-B)*(1-v/max)}
@@ -460,7 +522,7 @@ function renderTrend(){
  var labels=[];
  PLATFORMS.forEach(function(pl,k){
   var c=LINE_COLORS[k%LINE_COLORS.length],pts=[];
-  PERIODS.forEach(function(p,i){var st=p.stats[pl.key];if(st)pts.push([x(i),y(statVal(st,m)),statVal(st,m)])});
+  PERIODS.forEach(function(p,i){var st=p.stats[pl.key];var v=statVal(st,m);if(isComparable(st)&&v!=null)pts.push([x(i),y(v),v])});
   if(!pts.length)return;
   if(pts.length>1)s+='<polyline fill="none" stroke="'+c+'" stroke-width="2.2" points="'+pts.map(function(q){return q[0]+","+q[1]}).join(" ")+'"/>';
   pts.forEach(function(q){s+='<circle cx="'+q[0]+'" cy="'+q[1]+'" r="4.5" fill="'+c+'"><title>'+esc(pl.label+"："+disp(m,q[2]))+"</title></circle>"});
@@ -471,8 +533,14 @@ function renderTrend(){
  $("trendChart").innerHTML=s+"</svg>";
  var t="<thead><tr><th>日期</th>"+PLATFORMS.map(function(p){return'<th class="num">'+esc(p.label)+"</th>"}).join("")+"<th>说明</th></tr></thead><tbody>";
  PERIODS.forEach(function(p){t+="<tr><td>"+esc(p.date)+"</td>"+PLATFORMS.map(function(pl){var st=p.stats[pl.key];
-  var v=!st?"—":m==="mention"?st.mentionShort:m==="accuracy"?st.accuracy.toFixed(2):m==="ours"?st.ours:String(st.confusion);
-  return'<td class="num">'+esc(v)+"</td>"}).join("")+"<td>"+esc(p.note)+"</td></tr>"});
+  var v,cls="num";
+  if(!st){v="—"}
+  else if(!isComparable(st)){v=st.mentionShort||"不可比";cls="num incomp"}
+  else if(m==="mention")v=st.mentionShort;
+  else if(m==="accuracy")v=st.accuracy==null?"—":st.accuracy.toFixed(2);
+  else if(m==="ours")v=st.ours;
+  else v=st.confusion==null?"—":String(st.confusion);
+  return'<td class="'+cls+'">'+esc(v)+"</td>"}).join("")+"<td>"+esc(p.note)+"</td></tr>"});
  $("trendTbl").innerHTML=t+"</tbody>";
 }
 initSelects();renderBase();renderPrompts();renderTrend();initPromptLib();
